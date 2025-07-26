@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
+import { VITE_PUBLIC_API_URL } from '../../config';
 
 const AddressForm = ({ onSave }) => {
     const { _id } = useParams();
@@ -36,7 +37,7 @@ const AddressForm = ({ onSave }) => {
         }
 
         try {
-            const res = await axios.post(`${import.meta.env.VITE_PUBLIC_API_URL}/user/${_id}/address/save`, data, {
+            const res = await axios.post(`${VITE_PUBLIC_API_URL}/user/${_id}/address/save`, data, {
                 withCredentials: true
             });
             setMessage("✅ Address saved successfully!");

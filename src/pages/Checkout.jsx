@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import { FaShoppingCart, FaCreditCard } from 'react-icons/fa';
 import { Link } from 'react-router';
+import { VITE_PUBLIC_API_URL } from '../config';    
 
 const Checkout = () => {
     const { user } = useAuth();
@@ -24,7 +25,7 @@ const Checkout = () => {
         }
         try {
             await axios.post(
-                `${import.meta.env.VITE_PUBLIC_API_URL}/user/${_id}/cart/order`,
+                `${VITE_PUBLIC_API_URL}/user/${_id}/cart/order`,
                 { addressId: selectedAddress, paidAmount: toPay },
 
                 { withCredentials: true }
@@ -39,7 +40,7 @@ const Checkout = () => {
 
     const fetchAddress = async () => {
         try {
-            const res = await axios.get(`${import.meta.env.VITE_PUBLIC_API_URL}/user/${_id}`, {
+            const res = await axios.get(`${VITE_PUBLIC_API_URL}/user/${_id}`, {
                 withCredentials: true,
             });
 

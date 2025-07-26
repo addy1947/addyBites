@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
+import { VITE_PUBLIC_API_URL } from '../config';
 
 const AuthContext = createContext();
 
@@ -22,12 +23,12 @@ export const AuthProvider = ({ children }) => {
 
     const checkAuthStatus = async () => {
         try {
-            const response = await axios.get(`${import.meta.env.VITE_PUBLIC_API_URL}/api/auth/profile`, {
+            const response = await axios.get(`${VITE_PUBLIC_API_URL}/api/auth/profile`, {
                 withCredentials: true
             });
             setUser(response.data);
-        } catch (error) {
-            setUser(null);
+        } catch (e) {
+            setUser(null,e);
         } finally {
             setLoading(false);
         }
@@ -36,7 +37,7 @@ export const AuthProvider = ({ children }) => {
     const login = async (email, password) => {
         try {
             const response = await axios.post(
-                `${import.meta.env.VITE_PUBLIC_API_URL}/api/auth/login`,
+                `${VITE_PUBLIC_API_URL}/api/auth/login`,
                 { email, password },
                 { withCredentials: true }
             );
@@ -50,7 +51,7 @@ export const AuthProvider = ({ children }) => {
     const register = async (name, email, password) => {
         try {
             const response = await axios.post(
-                `${import.meta.env.VITE_PUBLIC_API_URL}/api/auth/register`,
+                `${VITE_PUBLIC_API_URL}/api/auth/register`,
                 { name, email, password },
                 { withCredentials: true }
             );
@@ -64,13 +65,13 @@ export const AuthProvider = ({ children }) => {
 
     const logout = async () => {
         try {
-            await axios.get(`${import.meta.env.VITE_PUBLIC_API_URL}/api/auth/logout`, {
+            await axios.get(`${VITE_PUBLIC_API_URL}/api/auth/logout`, {
                 withCredentials: true
             });
             setUser(null);
             return { success: true };
         } catch (error) {
-            return { success: false, error: 'Logout failed' };
+            return { success: false, error: error.response?.data?.message || 'Logout failed' };
         }
     };
 

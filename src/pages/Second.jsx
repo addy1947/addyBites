@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import Head from '../components/Head';
 import { useAuth } from '../context/AuthContext';
 import { Navigate } from 'react-router-dom';
+import { VITE_PUBLIC_API_URL } from '../config';
 
 
 const Second = () => {
@@ -16,7 +17,7 @@ const Second = () => {
 
     useEffect(() => {
         const fetchProduct = async () => {
-            const res = await axios.get(`${import.meta.env.VITE_PUBLIC_API_URL}/products/details/${_id}`);
+            const res = await axios.get(`${VITE_PUBLIC_API_URL}/products/details/${_id}`);
             console.log(res.data); // Log the response data
             setSingle(res.data);
         };
@@ -24,7 +25,7 @@ const Second = () => {
     }, []);
 
     const addcart = async () => {
-        await axios.post(`${import.meta.env.VITE_PUBLIC_API_URL}/products/cart/${userId}/add?qty=${quantity}&pro=${_id}`, {}, { withCredentials: true });
+        await axios.post(`${VITE_PUBLIC_API_URL}/products/cart/${userId}/add?qty=${quantity}&pro=${_id}`, {}, { withCredentials: true });
     };
 
 

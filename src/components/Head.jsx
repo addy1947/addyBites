@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import CartButton from './CartButton';
 import { useAuth } from '../context/AuthContext';
 import { CgProfile } from 'react-icons/cg';
+import { VITE_PUBLIC_API_URL } from '../config';
 
 const Head = (props) => {
     const [query, setQuery] = useState('');
@@ -21,7 +22,7 @@ const Head = (props) => {
         console.log('Searching for:', query.trim()); // Debug log
 
         try {
-            const res = await axios.get(`${import.meta.env.VITE_PUBLIC_API_URL}/products/search?q=` + encodeURIComponent(query.trim()));
+            const res = await axios.get(`${VITE_PUBLIC_API_URL}/products/search?q=` + encodeURIComponent(query.trim()));
             console.log('Search results:', res.data); // Debug log
             props.a(res.data);
         } catch (error) {

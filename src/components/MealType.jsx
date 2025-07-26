@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
+import { VITE_PUBLIC_API_URL } from '../config';
 
 const MealType = (props) => {
     const [mealType, setMealType] = useState("all");
@@ -16,7 +17,7 @@ const MealType = (props) => {
             }
             abortControllerRef.current = new AbortController();
             try {
-                const res = await axios.get(`${import.meta.env.VITE_PUBLIC_API_URL}/products/all`, {
+                const res = await axios.get(`${VITE_PUBLIC_API_URL}/products/all`, {
                     signal: abortControllerRef.current.signal
                 });
                 console.log("All products fetched:", res.data); // Log all fetched data

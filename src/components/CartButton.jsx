@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
-
+import { VITE_PUBLIC_API_URL } from '../config';
 
 const CartButton = ({ showCart, setShowCart, size }) => {
     const [cartData, setCartData] = useState([]);
@@ -11,7 +11,7 @@ const CartButton = ({ showCart, setShowCart, size }) => {
 
     const fetchProduct = async () => {
         try {
-            const res = await axios.get(`${import.meta.env.VITE_PUBLIC_API_URL}/products/${_id}/cart`, {
+            const res = await axios.get(`${VITE_PUBLIC_API_URL}/products/${_id}/cart`, {
                 withCredentials: true
             });
             setCartData(res.data);

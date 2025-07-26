@@ -4,6 +4,7 @@ import { FaEnvelope, FaLock } from 'react-icons/fa'
 import { useAuth } from '../context/AuthContext'
 import Head from './Head';
 
+
 const Login = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")

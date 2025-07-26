@@ -7,6 +7,7 @@ import Order from '../dashboard/Order';
 import { FiUser, FiBox, FiMapPin, FiHelpCircle, FiMenu } from 'react-icons/fi';
 import axios from 'axios';
 import { useParams } from 'react-router';
+import { VITE_PUBLIC_API_URL } from '../config';
 
 
 const Profile = () => {
@@ -18,7 +19,7 @@ const Profile = () => {
     useEffect(() => {
         const fetchAllProducts = async () => {
             try {
-                const res = await axios.get(`${import.meta.env.VITE_PUBLIC_API_URL}/user/${_id}`, { withCredentials: true })
+                const res = await axios.get(`${VITE_PUBLIC_API_URL}/user/${_id}`, { withCredentials: true })
                 console.log("All products fetched:", res.data); // Log all fetched data
                 setDetail(res.data)
             } catch (error) {
