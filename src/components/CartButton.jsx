@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
-import { VITE_PUBLIC_API_URL } from '../config';
+import { VITE_PUBLIC_API_URL } from '../config.js';
 
 const CartButton = ({ showCart, setShowCart, size }) => {
     const [cartData, setCartData] = useState([]);
