@@ -8,7 +8,7 @@ import Logout from './components/Logout'
 import { AuthProvider } from './context/AuthContext'
 import Profile from './pages/Profile'
 import ProtectedRoute from './components/ProtectedRoute'
-import Checkout from './pages/checkout'
+import Checkout from './pages/Checkout'
 import NewAddress from './pages/NewAddress'
 
 
@@ -58,7 +58,7 @@ const App = () => {
             path: '/user/:_id/saveaddress',
             element: (
                 <ProtectedRoute>
-                    <NewAddress/>
+                    <NewAddress />
                 </ProtectedRoute>
             )
         }
