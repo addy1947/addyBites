@@ -1,13 +1,50 @@
-# React + Vite
+# AddyBites Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React-based frontend for the AddyBites delivery application with modern UI and user authentication.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- User authentication and profile management
+- Product browsing and search functionality
+- Shopping cart with real-time updates
+- Checkout and order management
+- Responsive design with Tailwind CSS
 
-## Expanding the ESLint configuration
+## Setup
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-# addyBites
+1. Install dependencies:
+```bash
+npm install
+```
+
+2. Set up environment variables:
+   - Create a `.env.local` file in the root directory
+   - Add the following line:
+   ```
+   VITE_PUBLIC_API_URL=http://localhost:5000
+   ```
+   - For production, change the URL to your backend server
+
+3. Start the development server:
+```bash
+npm run dev
+```
+
+## Environment Variables
+
+- `VITE_PUBLIC_API_URL` - Backend API URL (default: http://localhost:5000)
+
+## Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+
+## Dependencies
+
+- React 18
+- Vite
+- React Router DOM
+- Axios
+- Tailwind CSS
+- React Icons

@@ -18,7 +18,7 @@ const Profile = () => {
     useEffect(() => {
         const fetchAllProducts = async () => {
             try {
-                const res = await axios.get(`http://localhost:5000/user/${_id}`, { withCredentials: true })
+                const res = await axios.get(`${import.meta.env.VITE_PUBLIC_API_URL}/user/${_id}`, { withCredentials: true })
                 console.log("All products fetched:", res.data); // Log all fetched data
                 setDetail(res.data)
             } catch (error) {

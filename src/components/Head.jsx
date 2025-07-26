@@ -21,7 +21,7 @@ const Head = (props) => {
         console.log('Searching for:', query.trim()); // Debug log
 
         try {
-            const res = await axios.get('http://localhost:5000/products/search?q=' + encodeURIComponent(query.trim()));
+            const res = await axios.get(`${import.meta.env.VITE_PUBLIC_API_URL}/products/search?q=` + encodeURIComponent(query.trim()));
             console.log('Search results:', res.data); // Debug log
             props.a(res.data);
         } catch (error) {

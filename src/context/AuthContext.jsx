@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
 
     const checkAuthStatus = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/api/auth/profile', {
+            const response = await axios.get(`${import.meta.env.VITE_PUBLIC_API_URL}/api/auth/profile`, {
                 withCredentials: true
             });
             setUser(response.data);
@@ -36,7 +36,7 @@ export const AuthProvider = ({ children }) => {
     const login = async (email, password) => {
         try {
             const response = await axios.post(
-                'http://localhost:5000/api/auth/login',
+                `${import.meta.env.VITE_PUBLIC_API_URL}/api/auth/login`,
                 { email, password },
                 { withCredentials: true }
             );
@@ -50,7 +50,7 @@ export const AuthProvider = ({ children }) => {
     const register = async (name, email, password) => {
         try {
             const response = await axios.post(
-                'http://localhost:5000/api/auth/register',
+                `${import.meta.env.VITE_PUBLIC_API_URL}/api/auth/register`,
                 { name, email, password },
                 { withCredentials: true }
             );
@@ -64,7 +64,7 @@ export const AuthProvider = ({ children }) => {
 
     const logout = async () => {
         try {
-            await axios.get('http://localhost:5000/api/auth/logout', {
+            await axios.get(`${import.meta.env.VITE_PUBLIC_API_URL}/api/auth/logout`, {
                 withCredentials: true
             });
             setUser(null);

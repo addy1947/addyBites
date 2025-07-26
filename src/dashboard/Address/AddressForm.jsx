@@ -36,7 +36,7 @@ const AddressForm = ({ onSave }) => {
         }
 
         try {
-            const res = await axios.post(`http://localhost:5000/user/${_id}/address/save`, data, {
+            const res = await axios.post(`${import.meta.env.VITE_PUBLIC_API_URL}/user/${_id}/address/save`, data, {
                 withCredentials: true
             });
             setMessage("✅ Address saved successfully!");

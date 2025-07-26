@@ -12,11 +12,11 @@ const Second = () => {
     const [quantity, setQuantity] = useState(1);
     const { user, loading } = useAuth();
     const userId = user?._id;
-    
+
 
     useEffect(() => {
         const fetchProduct = async () => {
-            const res = await axios.get(`http://localhost:5000/products/details/${_id}`);
+            const res = await axios.get(`${import.meta.env.VITE_PUBLIC_API_URL}/products/details/${_id}`);
             console.log(res.data); // Log the response data
             setSingle(res.data);
         };
@@ -24,7 +24,7 @@ const Second = () => {
     }, []);
 
     const addcart = async () => {
-        await axios.post(`http://localhost:5000/products/cart/${userId}/add?qty=${quantity}&pro=${_id}`, {}, { withCredentials: true });
+        await axios.post(`${import.meta.env.VITE_PUBLIC_API_URL}/products/cart/${userId}/add?qty=${quantity}&pro=${_id}`, {}, { withCredentials: true });
     };
 
 

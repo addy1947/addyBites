@@ -16,7 +16,7 @@ const MealType = (props) => {
             }
             abortControllerRef.current = new AbortController();
             try {
-                const res = await axios.get(`http://localhost:5000/products/all`, {
+                const res = await axios.get(`${import.meta.env.VITE_PUBLIC_API_URL}/products/all`, {
                     signal: abortControllerRef.current.signal
                 });
                 console.log("All products fetched:", res.data); // Log all fetched data

@@ -11,7 +11,7 @@ const CartButton = ({ showCart, setShowCart, size }) => {
 
     const fetchProduct = async () => {
         try {
-            const res = await axios.get(`http://localhost:5000/products/${_id}/cart`, {
+            const res = await axios.get(`${import.meta.env.VITE_PUBLIC_API_URL}/products/${_id}/cart`, {
                 withCredentials: true
             });
             setCartData(res.data);

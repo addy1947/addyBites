@@ -24,9 +24,9 @@ const Checkout = () => {
         }
         try {
             await axios.post(
-                `http://localhost:5000/user/${_id}/cart/order`,
+                `${import.meta.env.VITE_PUBLIC_API_URL}/user/${_id}/cart/order`,
                 { addressId: selectedAddress, paidAmount: toPay },
-                
+
                 { withCredentials: true }
             );
             alert("Order placed successfully!");
@@ -39,7 +39,7 @@ const Checkout = () => {
 
     const fetchAddress = async () => {
         try {
-            const res = await axios.get(`http://localhost:5000/user/${_id}`, {
+            const res = await axios.get(`${import.meta.env.VITE_PUBLIC_API_URL}/user/${_id}`, {
                 withCredentials: true,
             });
 
