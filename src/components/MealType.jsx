@@ -12,13 +12,10 @@ const MealType = (props) => {
     // Effect to fetch all products only once when the component mounts
     useEffect(() => {
         const fetchAllProducts = async () => {
-            if (abortControllerRef.current) {
-                abortControllerRef.current.abort();
-            }
-            abortControllerRef.current = new AbortController();
+            
             try {
                 const res = await axios.get(`${VITE_PUBLIC_API_URL}/products/all`, {
-                    signal: abortControllerRef.current.signal
+                    
                 });
                 console.log("All products fetched:", res.data); // Log all fetched data
                 setAllProducts(res.data);
