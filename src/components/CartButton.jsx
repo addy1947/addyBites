@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
@@ -25,6 +25,12 @@ const CartButton = ({ showCart, setShowCart, size }) => {
             console.error("Failed to fetch cart data:", error);
         }
     };
+
+    useEffect(() => {
+        if (user?._id) {
+            fetchProduct();
+        }
+    }, [cartData]);
 
     return (
         <>
