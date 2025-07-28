@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Head from '../components/Head';
 import Account from '../dashboard/Account';
-import Support from '../dashboard/Support';
+
 import Address from '../dashboard/Address';
 import Order from '../dashboard/Order';
 import { FiUser, FiBox, FiMapPin, FiHelpCircle, FiMenu } from 'react-icons/fi';
@@ -118,8 +118,6 @@ const Profile = () => {
                         <div className="bg-white/80 backdrop-blur-sm p-8 rounded-3xl shadow-xl border border-white/20 min-h-[80vh] transition-all duration-300 hover:shadow-2xl">
                             {nav === "accounts" ? (
                                 <Account a={detail} />
-                            ) : nav === "support" ? (
-                                <Support />
                             ) : nav === "order" ? (
                                 <Order a={detail} />
                             ) : nav === "address" ? (
