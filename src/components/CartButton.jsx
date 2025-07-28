@@ -4,6 +4,12 @@ import { useAuth } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
 import { VITE_PUBLIC_API_URL } from '../config.js';
 
+// Custom hook to manage cart state
+export const useCartState = () => {
+    const [showCart, setShowCart] = useState(false);
+    return { showCart, setShowCart };
+};
+
 const CartButton = ({ showCart, setShowCart, size }) => {
     const [cartData, setCartData] = useState([]);
     const { user } = useAuth();

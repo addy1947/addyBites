@@ -50,13 +50,14 @@ const MealType = (props) => {
     }, [mealType, allProducts]);
 
     // Effect to pass the displayed products to the parent component
+    const { a } = props;
+
     useEffect(() => {
-        const { a } = props;
         if (a && typeof a === 'function') {
-            // Ensure we always pass an array
             a(Array.isArray(displayedProducts) ? displayedProducts : []);
         }
-    }, [displayedProducts, props]); // Destructure props to avoid exhaustive-deps warning
+    }, [displayedProducts, a]); // cleaner and avoids exhaustive-deps warning
+
 
     return (
         <>

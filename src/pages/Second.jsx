@@ -5,7 +5,8 @@ import Head from '../components/Head';
 import { useAuth } from '../context/AuthContext';
 import { Navigate } from 'react-router-dom';
 import { VITE_PUBLIC_API_URL } from '../config';
-
+import { Link } from 'react-router-dom';
+import { useCartState } from '../components/CartButton';
 
 const Second = () => {
     const { _id } = useParams(); // or productName, depending on your route
@@ -13,6 +14,7 @@ const Second = () => {
     const [quantity, setQuantity] = useState(1);
     const { user, loading } = useAuth();
     const userId = user?._id;
+    const { setShowCart } = useCartState();
 
 
     useEffect(() => {
@@ -111,7 +113,13 @@ const Second = () => {
                                     +
                                 </button>
                             </div>
-                            <button onClick={addcart} className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg font-semibold shadow transition">Add to Cart</button>
+                            
+                            <button onClick={() => {
+                                addcart();
+                                setShowCart(true);
+                            }}
+ className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg font-semibold shadow transition">Add to Cart</button>
+                            
                         </div>
                     </div>
                 </div>
