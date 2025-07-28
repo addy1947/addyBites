@@ -11,6 +11,11 @@ const Head = (props) => {
     const { user, loading } = useAuth();
     const [showCart, setShowCart] = useState(false);
 
+    // Make setShowCart available globally through window object
+    React.useEffect(() => {
+        window.setShowCart = setShowCart;
+    }, []);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         e.stopPropagation();
