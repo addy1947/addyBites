@@ -28,7 +28,10 @@ const CartButton = ({ showCart, setShowCart, size }) => {
 
     useEffect(() => {
         if (user?._id) {
-            fetchProduct();
+            if(showCart==true){
+                fetchProduct();
+            }
+            
         }
     }, [showCart]);
 
