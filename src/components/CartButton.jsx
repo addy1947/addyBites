@@ -31,7 +31,6 @@ const CartButton = ({ showCart, setShowCart, size }) => {
             if(showCart==true){
                 fetchProduct();
             }
-            
         }
     }, [showCart]);
 
