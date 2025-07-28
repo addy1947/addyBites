@@ -3,8 +3,11 @@ import Head from '../components/Head';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import { FaShoppingCart, FaCreditCard } from 'react-icons/fa';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { VITE_PUBLIC_API_URL } from '../config';    
+import { useNavigate } from 'react-router-dom';
+
+
 
 const Checkout = () => {
     const { user } = useAuth();
@@ -14,6 +17,8 @@ const Checkout = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [selectedAddress, setSelectedAddress] = useState(null);
     const [showAddress, setShowAddress] = useState(true);
+    const navigate = useNavigate();
+
 
 
     const handleOrder = async () => {
@@ -30,7 +35,8 @@ const Checkout = () => {
 
                 { withCredentials: true }
             );
-            alert("Order placed successfully!");
+            navigate('/')
+            
         } catch (error) {
             alert("Failed to place order.");
             console.error(error);
@@ -206,10 +212,7 @@ const Checkout = () => {
                             <button
                                 disabled={cart.length === 0}
                                 className={`w-full mt-4 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold py-3 rounded-xl shadow transition duration-300 ${cart.length === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
-                                onClick={() => {
-                                    handleOrder();
-                                    window.location.reload();
-                                }}
+                                onClick={handleOrder}
                             >
                                 Proceed to Pay ₹{toPay}
                             </button>
