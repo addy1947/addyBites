@@ -8,13 +8,14 @@ const First = () => {
 
     return (
         <>
-            {/* Header section - Sticky only on md and above */}
+            {/* Header - Sticky only for tablets/desktops */}
             <div className="bg-white shadow-md md:sticky md:top-0 md:z-50">
                 <Head a={setData} />
                 <MealType a={setData} />
             </div>
 
-            <div className="mt-4">
+            {/* Main scrollable section with smooth behavior */}
+            <div className="mt-4 scroll-smooth">
                 <div
                     className="py-8 sm:py-10"
                     style={{
@@ -27,35 +28,27 @@ const First = () => {
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                             {Array.isArray(data) && data.length > 0 ? (
                                 data.map((item) => (
-                                    <Link
-                                        key={item._id}
-                                        to={"/details/" + item._id}
-                                        className="h-full"
-                                    >
-                                        <div className="flex flex-col sm:flex-row items-center sm:items-stretch gap-4 bg-white/10 backdrop-blur-md text-white rounded-xl p-4 shadow-lg hover:bg-white/20 transition h-full">
+                                    <Link key={item._id} to={"/details/" + item._id}>
+                                        <div className="flex items-start gap-4 bg-[#4b3621] text-white rounded-xl p-4 shadow-md transition hover:shadow-lg sm:flex-row">
                                             <div className="flex-shrink-0">
                                                 <img
                                                     src={item.image}
                                                     alt={item.name}
-                                                    className="w-24 h-24 object-cover rounded-full border-2 border-white"
+                                                    className="w-16 h-16 object-cover rounded-full border-2 border-white"
                                                 />
                                             </div>
-                                            <div className="flex flex-col text-center sm:text-left flex-grow justify-between">
-                                                <div>
-                                                    <div className="text-lg font-semibold mb-1 sm:mb-2">
-                                                        {item.name}
-                                                    </div>
-                                                    <div className="text-sm text-gray-300 leading-relaxed">
-                                                        {item.description.length > 80
-                                                            ? item.description.substring(0, 80) + '...'
-                                                            : item.description}
-                                                    </div>
+                                            <div className="flex flex-col flex-grow">
+                                                <div className="flex justify-between items-start">
+                                                    <h3 className="text-base font-semibold">{item.name}</h3>
+                                                    <span className="bg-red-500 text-white text-sm font-bold px-3 py-1 rounded-lg">
+                                                        ₹{item.price}
+                                                    </span>
                                                 </div>
-                                            </div>
-                                            <div className="sm:self-start">
-                                                <span className="bg-red-500 text-white text-sm font-bold px-3 py-1 rounded-lg">
-                                                    ₹{item.price}
-                                                </span>
+                                                <p className="text-sm text-gray-300 mt-1">
+                                                    {item.description.length > 80
+                                                        ? item.description.substring(0, 80) + '...'
+                                                        : item.description}
+                                                </p>
                                             </div>
                                         </div>
                                     </Link>
