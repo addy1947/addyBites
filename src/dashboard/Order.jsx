@@ -7,129 +7,98 @@ import {
 } from 'react-icons/md';
 
 const Order = ({ a }) => {
-    const getStatusDisplay = (status) => {
-        switch (status) {
-            case 'Delivered':
-                return {
-                    icon: <MdCheckCircle className="text-green-600" />,
-                    badge: 'bg-green-100 text-green-700'
-                };
-            case 'Out for Delivery':
-                return {
-                    icon: <MdLocalShipping className="text-green-500" />,
-                    badge: 'bg-green-50 text-green-600'
-                };
-            case 'Pending':
-                return {
-                    icon: <MdAccessTime className="text-green-400" />,
-                    badge: 'bg-green-50 text-green-500'
-                };
-            default:
-                return { icon: null, badge: 'bg-gray-200 text-gray-700' };
-        }
-    };
-
-    // Check if a and a.order exist before rendering
-    if (!a || !a.order || !Array.isArray(a.order)) {
+    if (!a?.order?.length) {
         return (
-            <div className="p-6 space-y-6 bg-green-50 min-h-screen">
-                <div className="bg-white p-6 rounded-2xl shadow-lg border border-green-100 w-full max-w-3xl mx-auto">
-                    <h2 className="text-xl font-semibold text-green-900 mb-4">Order Status</h2>
+            <div className="p-6 bg-green-50 min-h-screen">
+                <div className="bg-white p-6 rounded-xl shadow border max-w-2xl mx-auto">
+                    <h2 className="text-lg font-semibold text-green-900 mb-2">Order Status</h2>
                     <p className="text-green-700">No orders found.</p>
                 </div>
             </div>
         );
     }
 
+    const getStatus = (orderTime) => {
+        const mins = Math.floor((Date.now() - orderTime) / 60000);
+        if (mins < 5) return 'Pending';
+        if (mins < 30) return 'Out for Delivery';
+        return 'Delivered';
+    };
+
+    const getBadge = (status) => {
+        switch (status) {
+            case 'Pending':
+                return { icon: <MdAccessTime className="text-green-400" />, style: 'bg-green-50 text-green-500' };
+            case 'Out for Delivery':
+                return { icon: <MdLocalShipping className="text-green-500" />, style: 'bg-green-50 text-green-600' };
+            case 'Delivered':
+                return { icon: <MdCheckCircle className="text-green-600" />, style: 'bg-green-100 text-green-700' };
+            default:
+                return { icon: null, style: 'bg-gray-200 text-gray-700' };
+        }
+    };
+
     return (
-        <div className="p-6 space-y-6 bg-green-50 min-h-screen">
+        <div className="p-6 bg-green-50 min-h-screen space-y-6">
             {a.order.map((item, index) => {
-                const timeDiffInMinutes = Math.floor((Date.now() - item.time) / 60000);
-
-                let status = '';
-                if (timeDiffInMinutes < 5) {
-                    status = 'Pending';
-                } else if (timeDiffInMinutes < 30) {
-                    status = 'Out for Delivery';
-                } else {
-                    status = 'Delivered';
-                }
-
-                const { icon, badge } = getStatusDisplay(status);
+                const status = getStatus(item.time);
+                const { icon, style } = getBadge(status);
 
                 return (
-                    <div
-                        key={index}
-                        className="bg-white p-6 rounded-2xl shadow-lg border border-green-100 w-full max-w-3xl mx-auto transition hover:shadow-xl"
-                    >
+                    <div key={index} className="bg-white p-6 rounded-xl shadow border max-w-2xl mx-auto space-y-4">
                         {/* Status + Address */}
-                        <div className="flex justify-between items-start mb-4">
-                            <div className="text-green-900">
-                                <h2 className="text-xl font-semibold">Order Status</h2>
-                                <p className="text-sm mt-1 text-green-700">Delivery Address:</p>
-                                <div className="flex items-start gap-2 text-green-800 text-sm mt-1 leading-5">
+                        <div className="flex justify-between items-start">
+                            <div>
+                                <h2 className="text-lg font-semibold text-green-900">Order Status</h2>
+                                <div className="flex items-start gap-2 text-green-800 text-sm mt-1">
                                     <MdLocationOn className="mt-0.5 text-xl" />
                                     <span>
-                                        {item.address && item.address.name ? (
-                                            <>
-                                                {item.address.name}, {item.address.buildingNumber}, {item.address.city},<br />
-                                                {item.address.district}, {item.address.state} - {item.address.pincode}
-                                            </>
-                                        ) : (
-                                            "Address not available"
-                                        )}
+                                        {item.address?.name
+                                            ? `${item.address.name}, ${item.address.buildingNumber}, ${item.address.city}, ${item.address.district}, ${item.address.state} - ${item.address.pincode}`
+                                            : 'Address not available'}
                                     </span>
                                 </div>
                             </div>
-                            <div className={`flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium ${badge}`}>
+                            <div className={`flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium ${style}`}>
                                 {icon}
                                 <span>{status}</span>
                             </div>
                         </div>
 
                         {/* Items */}
-                        <h3 className="text-md font-semibold text-green-900 mb-3 border-b border-green-200 pb-1">Ordered Items</h3>
                         <div className="space-y-3">
-                            {item.orderedproduct && Array.isArray(item.orderedproduct) ? (
-                                item.orderedproduct.map((productItem, i) => (
-                                    <div
-                                        key={i}
-                                        className="bg-green-50 rounded-xl p-3 flex justify-between items-center border border-green-100"
-                                    >
-                                        <div className="flex items-center gap-4">
+                            {item.orderedproduct?.length ? (
+                                item.orderedproduct.map((p, i) => (
+                                    <div key={i} className="flex justify-between items-center p-3 bg-green-50 rounded-lg border">
+                                        <div className="flex items-center gap-3">
                                             <img
-                                                src={productItem.productId?.image || '/placeholder-image.jpg'}
-                                                alt={productItem.productId?.name || 'Product'}
-                                                className="w-16 h-16 rounded-md object-cover border border-green-200"
+                                                src={p.productId?.image || '/placeholder.jpg'}
+                                                alt={p.productId?.name || 'Product'}
+                                                className="w-14 h-14 object-cover rounded border"
                                             />
                                             <div>
-                                                <div className="text-green-900 font-medium text-base">
-                                                    {productItem.productId?.name || 'Product Name Not Available'}
+                                                <div className="text-green-900 font-medium">
+                                                    {p.productId?.name || 'Product Name'}
                                                 </div>
-                                                <div className="text-sm text-green-800">
-                                                    ₹{productItem.productId?.price || 0}
-                                                </div>
+                                                <div className="text-green-700 text-sm">₹{p.productId?.price || 0}</div>
                                             </div>
                                         </div>
-
-                                        <div className="flex items-center gap-4">
-                                            <div className="text-green-700 font-semibold text-lg">x{productItem.qty || 0}</div>
-                                            <div className="text-green-900 font-bold text-lg">
-                                                ₹{(productItem.qty || 0) * (productItem.productId?.price || 0)}
+                                        <div className="text-right">
+                                            <div className="text-green-700 text-sm">x{p.qty || 0}</div>
+                                            <div className="text-green-900 font-semibold">
+                                                ₹{(p.qty || 0) * (p.productId?.price || 0)}
                                             </div>
                                         </div>
                                     </div>
                                 ))
                             ) : (
-                                <div className="text-green-700 text-center py-4">No products found for this order.</div>
+                                <div className="text-green-700 text-center">No products in this order.</div>
                             )}
                         </div>
 
                         {/* Total */}
-                        <div className="flex justify-end mt-6">
-                            <div className="text-xl font-bold text-green-900">
-                                Total Paid: ₹{item.paidAmount || 0}
-                            </div>
+                        <div className="text-right text-lg font-bold text-green-900">
+                            Total Paid: ₹{item.paidAmount || 0}
                         </div>
                     </div>
                 );
