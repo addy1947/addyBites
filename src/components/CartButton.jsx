@@ -30,7 +30,7 @@ const CartButton = ({ showCart, setShowCart, size }) => {
         if (user?._id) {
             fetchProduct();
         }
-    }, [cartData]);
+    }, [showCart]);
 
     return (
         <>
@@ -39,8 +39,7 @@ const CartButton = ({ showCart, setShowCart, size }) => {
                 className={`fixed bg-red-500 hover:bg-red-700 text-white rounded-full shadow-lg flex items-center justify-center z-50 transition-transform duration-300 hover:scale-110 focus:outline-none focus:ring-4 focus:ring-red-300 ${size === 'small' ? 'w-12 h-12 text-xl' : 'w-14 h-14 text-2xl'}`}
                 style={size === 'small' ? { position: 'static' } : { top: '1.5rem', right: '1.5rem' }}
                 onClick={() => {
-                    setShowCart(true);
-                    fetchProduct();
+                    setShowCart(true)
                 }}
                 aria-label="Open cart"
             >
