@@ -206,7 +206,10 @@ const Checkout = () => {
                             <button
                                 disabled={cart.length === 0}
                                 className={`w-full mt-4 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold py-3 rounded-xl shadow transition duration-300 ${cart.length === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
-                                onClick={handleOrder}
+                                onClick={() => {
+                                    handleOrder();
+                                    window.location.reload();
+                                }}
                             >
                                 Proceed to Pay ₹{toPay}
                             </button>
