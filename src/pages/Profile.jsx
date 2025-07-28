@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Head from '../components/Head';
 import Account from '../dashboard/Account';
-
 import Address from '../dashboard/Address';
 import Order from '../dashboard/Order';
 import { FiUser, FiBox, FiMapPin, FiHelpCircle, FiMenu } from 'react-icons/fi';
@@ -37,7 +36,6 @@ const Profile = () => {
         { key: "accounts", label: "My Account", icon: <FiUser />, color: "blue" },
         { key: "order", label: "My Order", icon: <FiBox />, color: "green" },
         { key: "address", label: "Address", icon: <FiMapPin />, color: "purple" },
-        { key: "support", label: "Customer Support", icon: <FiHelpCircle />, color: "orange" },
     ];
 
     const getColorClasses = (color, isActive) => {
@@ -45,7 +43,6 @@ const Profile = () => {
             blue: isActive ? "bg-blue-100 text-blue-700 border-blue-200" : "hover:bg-blue-50 hover:text-blue-700",
             green: isActive ? "bg-green-100 text-green-700 border-green-200" : "hover:bg-green-50 hover:text-green-700",
             purple: isActive ? "bg-purple-100 text-purple-700 border-purple-200" : "hover:bg-purple-50 hover:text-purple-700",
-            orange: isActive ? "bg-orange-100 text-orange-700 border-orange-200" : "hover:bg-orange-50 hover:text-orange-700",
         };
         return colors[color];
     };
