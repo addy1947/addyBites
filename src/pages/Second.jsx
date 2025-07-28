@@ -18,7 +18,7 @@ const Second = () => {
     useEffect(() => {
         const fetchProduct = async () => {
             const res = await axios.get(`${VITE_PUBLIC_API_URL}/products/details/${_id}`);
-            console.log(res.data); // Log the response data
+
             setSingle(res.data);
         };
         fetchProduct();

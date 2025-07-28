@@ -11,17 +11,19 @@ const MealType = (props) => {
 
     // Effect to fetch all products only once when the component mounts
     useEffect(() => {
+        const controller = new AbortController();
+        abortControllerRef.current = controller;
+
         const fetchAllProducts = async () => {
-            
             try {
                 const res = await axios.get(`${VITE_PUBLIC_API_URL}/products/all`, {
-                    
+                    signal: controller.signal
                 });
-                console.log("All products fetched:", res.data); // Log all fetched data
+
                 setAllProducts(res.data);
             } catch (error) {
                 if (axios.isCancel(error)) {
-                    console.log('Request cancelled', error.message);
+                    // Request was cancelled
                 } else {
                     console.error('Error fetching all products:', error);
                 }
@@ -32,9 +34,7 @@ const MealType = (props) => {
 
         // Cleanup function for the initial fetch
         return () => {
-            if (abortControllerRef.current) {
-                abortControllerRef.current.abort();
-            }
+            controller.abort();
         };
     }, []); // Empty dependency array means this runs only once on mount
 
@@ -51,10 +51,12 @@ const MealType = (props) => {
 
     // Effect to pass the displayed products to the parent component
     useEffect(() => {
-        if (props.a && typeof props.a === 'function') {
-            props.a(displayedProducts);
+        const { a } = props;
+        if (a && typeof a === 'function') {
+            // Ensure we always pass an array
+            a(Array.isArray(displayedProducts) ? displayedProducts : []);
         }
-    }, [displayedProducts, props.a]); // Only depend on the function reference
+    }, [displayedProducts, props]); // Destructure props to avoid exhaustive-deps warning
 
     return (
         <>

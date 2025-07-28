@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }) => {
             });
             setUser(response.data);
         } catch (e) {
-            setUser(null,e);
+            setUser(null, e);
         } finally {
             setLoading(false);
         }
@@ -55,7 +55,7 @@ export const AuthProvider = ({ children }) => {
                 { name, email, password },
                 { withCredentials: true }
             );
-            console.log(response.data); // Log the response data
+
             setUser(response.data);
             return { success: true, data: response.data };
         } catch (error) {

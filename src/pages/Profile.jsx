@@ -20,11 +20,11 @@ const Profile = () => {
         const fetchAllProducts = async () => {
             try {
                 const res = await axios.get(`${VITE_PUBLIC_API_URL}/user/${_id}`, { withCredentials: true })
-                console.log("All products fetched:", res.data); // Log all fetched data
+
                 setDetail(res.data)
             } catch (error) {
                 if (axios.isCancel(error)) {
-                    console.log('Request cancelled', error.message);
+                    // Request was cancelled
                 } else {
                     console.error('Error fetching all products:', error);
                 }

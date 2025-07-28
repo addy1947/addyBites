@@ -19,11 +19,11 @@ const Head = (props) => {
             return; // Don't search if query is empty
         }
 
-        console.log('Searching for:', query.trim()); // Debug log
+
 
         try {
             const res = await axios.get(`${VITE_PUBLIC_API_URL}/products/search?q=` + encodeURIComponent(query.trim()));
-            console.log('Search results:', res.data); // Debug log
+
             props.a(res.data);
         } catch (error) {
             console.error('Error fetching search results:', error);
@@ -39,7 +39,7 @@ const Head = (props) => {
                                 sm:items-start sm:w-auto sm:mb-0">
                     <Link to="/">
                         <h1 className="cursor-pointer text-3xl font-extrabold tracking-tight bg-gradient-to-br from-pink-500 via-red-500 to-orange-400 bg-clip-text text-transparent shadow-lg text-center
-                                       xs:text-4xl sm:text-5xl sm:text-left">
+                                       sm:text-4xl md:text-5xl sm:text-left">
                             Addy<span className="text-yellow-400 drop-shadow-md">Bites</span>
                         </h1>
                     </Link>
@@ -54,7 +54,7 @@ const Head = (props) => {
                                 type="text"
                                 placeholder="Search food..."
                                 className="w-full px-4 py-2 pl-10 text-black rounded-full border-2 border-red-500 focus:outline-none focus:ring-2 focus:ring-red-400 shadow-md text-base
-                                           sm:w-64 md:w-80 xs:text-lg"
+                                           sm:w-64 md:w-80 sm:text-lg"
                                 value={query}
                                 onChange={(e) => setQuery(e.target.value)}
                                 onKeyPress={(e) => {
