@@ -123,16 +123,18 @@ const CartButton = ({ size = 'small', showCart: externalShowCart, setShowCart: e
                                             onClick={() => updateQty(item.productId._id, 'inc')}
                                         >+</button>
                                     </div>
+                                    <div>
+                                        <MdDelete
+                                            className="absolute bottom-2 left-2 text-red-500 hover:text-red-700 cursor-pointer"
+                                            onClick={() => deleteItem(item.productId._id)}
+                                        />
+                                    </div>
                                     <div className="text-right text-base font-semibold text-gray-800 min-w-[60px]">
                                         ₹{item.productId.price * item.qty}
                                     </div>
                                 </div>
 
-                                {/* Delete button - bottom left */}
-                                <MdDelete
-                                    className="absolute bottom-2 left-2 text-red-500 hover:text-red-700 cursor-pointer"
-                                    onClick={() => deleteItem(item.productId._id)}
-                                />
+
                             </div>
                         ))
                     ) : (
