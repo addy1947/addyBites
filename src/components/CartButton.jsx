@@ -98,21 +98,24 @@ const CartButton = ({ size = 'small', showCart: externalShowCart, setShowCart: e
                                 key={item.productId._id}
                                 className="relative bg-white shadow-sm border border-gray-200 rounded-xl p-2"
                             >
-                                <div className="grid grid-cols-[1fr_auto_auto] items-center gap-2">
-                                    <div className="flex items-center gap-2">
+                                <div className="flex items-center justify-between gap-4 py-2 border-b">
+                                    {/* Image + name + price */}
+                                    <div className="flex items-center gap-3 min-w-0">
                                         <img
                                             src={item.productId.image}
                                             alt={item.productId.name}
                                             className="w-12 h-12 rounded-md object-cover"
                                         />
-                                        <div className="leading-tight">
+                                        <div className="leading-tight truncate">
                                             <h3 className="text-sm font-medium text-gray-800 truncate max-w-[120px]">
                                                 {item.productId.name}
                                             </h3>
                                             <p className="text-xs text-gray-500">₹{item.productId.price}</p>
                                         </div>
                                     </div>
-                                    <div className="flex items-center justify-center gap-2 bg-red-50 px-2 py-1 rounded-full border border-red-300 text-red-600 font-semibold text-sm">
+
+                                    {/* Quantity control */}
+                                    <div className="flex items-center justify-center gap-2 bg-red-50 px-3 py-1 rounded-full border border-red-300 text-red-600 font-semibold text-sm">
                                         <button
                                             className="px-1 text-lg hover:text-red-700"
                                             onClick={() => updateQty(item.productId._id, 'dec')}
@@ -123,16 +126,19 @@ const CartButton = ({ size = 'small', showCart: externalShowCart, setShowCart: e
                                             onClick={() => updateQty(item.productId._id, 'inc')}
                                         >+</button>
                                     </div>
-                                    <div>
-                                        <MdDelete
-                                            className="absolute bottom-2 left-2 text-red-500 hover:text-red-700 cursor-pointer"
-                                            onClick={() => deleteItem(item.productId._id)}
-                                        />
-                                    </div>
-                                    <div className="text-right text-base font-semibold text-gray-800 min-w-[60px]">
+
+                                    {/* Delete button */}
+                                    <MdDelete
+                                        className="text-xl text-red-500 hover:text-red-700 cursor-pointer"
+                                        onClick={() => deleteItem(item.productId._id)}
+                                    />
+
+                                    {/* Total */}
+                                    <div className="text-base font-semibold text-gray-800 min-w-[60px] text-right">
                                         ₹{item.productId.price * item.qty}
                                     </div>
                                 </div>
+
 
 
                             </div>
