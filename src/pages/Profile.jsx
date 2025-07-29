@@ -71,7 +71,7 @@ const Profile = () => {
             <div className="flex flex-col md:flex-row min-h-screen relative">
                 {/* Sidebar */}
                 <div
-                    className={`fixed z-40 md:static md:translate-x-0 top-0 left-0 w-[80%] max-w-xs md:w-[300px] bg-white md:shadow-none shadow-lg border-r border-gray-100 h-full md:h-[calc(100vh-80px)] overflow-y-auto transition-transform duration-300 ease-in-out
+                    className={`fixed z-60 md:static md:translate-x-0 top-0 left-0 w-[80%] max-w-xs md:w-[300px] bg-white md:shadow-none shadow-lg border-r border-gray-100 h-full md:h-[calc(100vh-80px)] overflow-y-auto transition-transform duration-300 ease-in-out
                     ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
                 >
                     <div className="px-6 py-6">
