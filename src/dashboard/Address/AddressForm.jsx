@@ -41,13 +41,12 @@ const AddressForm = ({ onSave }) => {
                 withCredentials: true
             });
             setMessage("✅ Address saved successfully!");
-            onSave && onSave(res.data); // Optional callback
+            onSave && onSave(res.data);
             navigate(-1);
         } catch (error) {
             setMessage(error.response?.data?.message || "❌ Failed to save address.");
         }
 
-        // Reset form
         setFormData({
             name: '',
             buildingNumber: '',
@@ -60,11 +59,14 @@ const AddressForm = ({ onSave }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="bg-white p-4 rounded shadow-md max-w-md mx-auto">
-            <h2 className="text-lg font-bold mb-2 text-center">Add Address</h2>
+        <form
+            onSubmit={handleSubmit}
+            className="bg-white p-4 sm:p-6 rounded-xl shadow-md w-full max-w-md mx-auto mt-4 sm:mt-8"
+        >
+            <h2 className="text-xl sm:text-2xl font-semibold mb-4 text-center text-gray-800">Add Address</h2>
 
             {message && (
-                <div className={`mb-3 p-2 rounded text-sm ${message.includes('success') ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                <div className={`mb-3 p-3 rounded text-sm ${message.includes('success') ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
                     {message}
                 </div>
             )}
@@ -78,23 +80,23 @@ const AddressForm = ({ onSave }) => {
                 { label: 'State', name: 'state' },
                 { label: 'Pincode', name: 'pincode' },
             ].map(({ label, name, required = true }) => (
-                <div className="mb-2" key={name}>
-                    <label className="block mb-1">{label}</label>
+                <div className="mb-3" key={name}>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
                     <input
                         type="text"
                         name={name}
                         value={formData[name]}
                         onChange={handleChange}
-                        className="w-full border px-2 py-1 rounded"
+                        className="w-full border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm"
                         required={required}
                     />
                 </div>
             ))}
 
-            <div className="flex gap-2 mt-3">
+            <div className="flex flex-col sm:flex-row gap-2 mt-4">
                 <button
                     type="submit"
-                    className="bg-green-500 text-white px-4 py-2 rounded disabled:opacity-50"
+                    className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm transition"
                     disabled={
                         !formData.name ||
                         !formData.buildingNumber ||
@@ -117,7 +119,7 @@ const AddressForm = ({ onSave }) => {
                         state: '',
                         pincode: '',
                     })}
-                    className="bg-gray-300 text-black px-4 py-2 rounded"
+                    className="bg-gray-300 hover:bg-gray-400 text-black px-4 py-2 rounded-md text-sm transition"
                 >
                     Clear
                 </button>

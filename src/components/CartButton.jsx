@@ -1,19 +1,19 @@
-import React, { useState ,useEffect} from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
 import { VITE_PUBLIC_API_URL } from '../config.js';
 
 // Custom hook to manage cart state
-export const useCartState = () => {
-    const [showCart, setShowCart] = useState(false);
-    return { showCart, setShowCart };
-};
 
-const CartButton = ({ showCart, setShowCart, size }) => {
+   
+    
+
+const CartButton = (size) => {
     const [cartData, setCartData] = useState([]);
     const { user } = useAuth();
     const _id = user?._id;
+    const [showCart, setShowCart] = useState(false);
 
     const fetchProduct = async () => {
         try {
@@ -26,13 +26,7 @@ const CartButton = ({ showCart, setShowCart, size }) => {
         }
     };
 
-    useEffect(() => {
-        if (user?._id) {
-            if(showCart==true){
-                fetchProduct();
-            }
-        }
-    }, [showCart]);
+    
 
     return (
         <>
@@ -42,6 +36,7 @@ const CartButton = ({ showCart, setShowCart, size }) => {
                 style={size === 'small' ? { position: 'static' } : { top: '1.5rem', right: '1.5rem' }}
                 onClick={() => {
                     setShowCart(true)
+                    fetchProduct()
                 }}
                 aria-label="Open cart"
             >

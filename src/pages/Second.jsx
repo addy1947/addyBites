@@ -5,7 +5,7 @@ import Head from '../components/Head';
 import { useAuth } from '../context/AuthContext';
 import { Navigate } from 'react-router-dom';
 import { VITE_PUBLIC_API_URL } from '../config';
-import { Link } from 'react-router-dom';
+
 
 const Second = () => {
     const { _id } = useParams(); // or productName, depending on your route
@@ -114,7 +114,6 @@ const Second = () => {
 
                             <button onClick={() => {
                                 addcart();
-                                window.setShowCart(true);
                             }}
                                 className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg font-semibold shadow transition">Add to Cart</button>
 

@@ -3,11 +3,10 @@ import Head from '../components/Head';
 import Account from '../dashboard/Account';
 import Address from '../dashboard/Address';
 import Order from '../dashboard/Order';
-import { FiUser, FiBox, FiMapPin, FiHelpCircle, FiMenu } from 'react-icons/fi';
+import { FiUser, FiBox, FiMapPin, FiMenu } from 'react-icons/fi';
 import axios from 'axios';
 import { useParams } from 'react-router';
 import { VITE_PUBLIC_API_URL } from '../config';
-
 
 const Profile = () => {
     const [nav, setNav] = useState("accounts");
@@ -18,13 +17,10 @@ const Profile = () => {
     useEffect(() => {
         const fetchAllProducts = async () => {
             try {
-                const res = await axios.get(`${VITE_PUBLIC_API_URL}/user/${_id}`, { withCredentials: true })
-
-                setDetail(res.data)
+                const res = await axios.get(`${VITE_PUBLIC_API_URL}/user/${_id}`, { withCredentials: true });
+                setDetail(res.data);
             } catch (error) {
-                if (axios.isCancel(error)) {
-                    // Request was cancelled
-                } else {
+                if (!axios.isCancel(error)) {
                     console.error('Error fetching all products:', error);
                 }
             }
@@ -52,41 +48,37 @@ const Profile = () => {
             <div className='sticky top-0 z-50 bg-white shadow-md'>
                 <Head />
             </div>
-            <div >
-                {/* Header */}
-                <div className="">
-                    <div className="py-4 px-6 flex items-center justify-between">
 
-                        <button
-                            className="md:hidden p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                            onClick={() => setSidebarOpen(!sidebarOpen)}
-                        >
-                            <FiMenu />
-                        </button>
-                    </div>
-                </div>
+            {/* Mobile top bar with menu */}
+            <div className="md:hidden py-4 px-4 flex items-center justify-between shadow-sm">
+                <button
+                    className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                    onClick={() => setSidebarOpen(!sidebarOpen)}
+                >
+                    <FiMenu />
+                </button>
+                <h2 className="text-lg font-semibold text-gray-800">Dashboard</h2>
+            </div>
 
-                {/* Overlay for mobile */}
-                {sidebarOpen && (
-                    <div
-                        className="fixed inset-0 bg-black/20 backdrop-blur-sm z-30 md:hidden"
-                        onClick={() => setSidebarOpen(false)}
-                    />
-                )}
+            {/* Overlay */}
+            {sidebarOpen && (
+                <div
+                    className="fixed inset-0 bg-black/40 backdrop-blur-sm z-30 md:hidden"
+                    onClick={() => setSidebarOpen(false)}
+                />
+            )}
 
-                {/* Layout */}
-                <div className=" flex min-h-screen">
-                    {/* Sidebar */}
-                    <div
-                        className={`sticky top-15 left-0 md:sticky bg-white/95 backdrop-blur-xl shadow-xl md:shadow-lg border-r border-gray-100 px-6 py-8 w-[300px] h-[calc(100vh-80px)] overflow-y-auto transition-all duration-300 ease-in-out transform
-                    ${sidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}`}
-                    >
-                        <div className="mb-8">
-                            <h2 className="text-2xl font-bold mb-2 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 text-transparent bg-clip-text">
-                                Dashboard
-                            </h2>
-                            <p className="text-gray-500 text-sm">Manage your account</p>
-                        </div>
+            <div className="flex flex-col md:flex-row min-h-screen relative">
+                {/* Sidebar */}
+                <div
+                    className={`fixed z-40 md:static md:translate-x-0 top-0 left-0 w-[80%] max-w-xs md:w-[300px] bg-white md:shadow-none shadow-lg border-r border-gray-100 h-full md:h-[calc(100vh-80px)] overflow-y-auto transition-transform duration-300 ease-in-out
+                    ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
+                >
+                    <div className="px-6 py-6">
+                        <h2 className="text-2xl font-bold mb-2 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 text-transparent bg-clip-text">
+                            Dashboard
+                        </h2>
+                        <p className="text-gray-500 text-sm mb-6">Manage your account</p>
 
                         {navItems.map((item) => (
                             <div
@@ -101,27 +93,25 @@ const Profile = () => {
                                         : `text-gray-600 ${getColorClasses(item.color, false)} hover:shadow-sm`
                                     }`}
                             >
-                                <div className={`p-1 rounded-lg transition-colors ${nav === item.key ? 'bg-white/50' : 'group-hover:bg-white/50'
-                                    }`}>
+                                <div className={`p-1 rounded-lg transition-colors ${nav === item.key ? 'bg-white/50' : 'group-hover:bg-white/50'}`}>
                                     {item.icon}
                                 </div>
-                                <span className="font-medium">{item.label}</span>
+                                <span className="font-medium text-sm">{item.label}</span>
                             </div>
                         ))}
                     </div>
+                </div>
 
-                    {/* Main Content */}
-                    <div className="flex-1 p-6 md:ml-0">
-                        <div className="bg-white/80 backdrop-blur-sm p-8 rounded-3xl shadow-xl border border-white/20 min-h-[80vh] transition-all duration-300 hover:shadow-2xl">
-                            {nav === "accounts" ? (
-                                <Account a={detail} />
-                            ) : nav === "order" ? (
-                                <Order a={detail} />
-                            ) : nav === "address" ? (
-                                <Address a={_id} b={detail} />
-                            ) : null
-                            }
-                        </div>
+                {/* Main content */}
+                <div className="flex-1 p-4 md:p-6 mt-4 md:mt-0">
+                    <div className="bg-white/90 backdrop-blur-sm p-4 md:p-8 rounded-2xl shadow-lg border border-white/30 min-h-[80vh] transition duration-300">
+                        {nav === "accounts" ? (
+                            <Account a={detail} />
+                        ) : nav === "order" ? (
+                            <Order a={detail} />
+                        ) : nav === "address" ? (
+                            <Address a={_id} b={detail} />
+                        ) : null}
                     </div>
                 </div>
             </div>
