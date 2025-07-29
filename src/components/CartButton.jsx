@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
 import { VITE_PUBLIC_API_URL } from '../config.js';
+import { MdDelete } from "react-icons/md";
 
 const CartButton = ({ size = 'small', showCart: externalShowCart, setShowCart: externalSetShowCart }) => {
     const [cartData, setCartData] = useState([]);
@@ -38,6 +39,15 @@ const CartButton = ({ size = 'small', showCart: externalShowCart, setShowCart: e
         await axios.post(`${VITE_PUBLIC_API_URL}/products/${_id}/cart/update`, {
             productId,
             qty: type === 'inc' ? cartData.find(item => item.productId._id === productId).qty + 1 : cartData.find(item => item.productId._id === productId).qty - 1
+        }, {
+            withCredentials: true
+        });
+        fetchProduct();
+    };
+
+    const deleteItem = async (productId) => {
+        await axios.post(`${VITE_PUBLIC_API_URL}/products/${_id}/cart/update/delete`, {
+            productId
         }, {
             withCredentials: true
         });
@@ -115,6 +125,7 @@ const CartButton = ({ size = 'small', showCart: externalShowCart, setShowCart: e
                                 <div className="text-right text-base font-semibold text-gray-800 min-w-[60px]">
                                     ₹{item.productId.price * item.qty}
                                 </div>
+                                <MdDelete className="text-red-500 hover:text-red-700 cursor-pointer" onClick={() => deleteItem(item.productId._id)} />
                             </div>
                         ))
                     ) : (
