@@ -18,7 +18,6 @@ const Second = () => {
     useEffect(() => {
         const fetchProduct = async () => {
             const res = await axios.get(`${VITE_PUBLIC_API_URL}/products/details/${_id}`);
-
             setSingle(res.data);
         };
         fetchProduct();
@@ -26,6 +25,7 @@ const Second = () => {
 
     const addcart = async () => {
         await axios.post(`${VITE_PUBLIC_API_URL}/products/cart/${userId}/add?qty=${quantity}&pro=${_id}`, {}, { withCredentials: true });
+        
     };
 
 

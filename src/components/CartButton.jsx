@@ -9,7 +9,6 @@ const CartButton = ({ size = 'small', showCart: externalShowCart, setShowCart: e
     const { user } = useAuth();
     const _id = user?._id;
 
-    // Use internal state if external not passed
     const [internalShowCart, setInternalShowCart] = useState(false);
     const showCart = externalShowCart ?? internalShowCart;
     const setShowCart = externalSetShowCart ?? setInternalShowCart;
@@ -25,12 +24,32 @@ const CartButton = ({ size = 'small', showCart: externalShowCart, setShowCart: e
         }
     };
 
+    const updateQty = async (productId, type) => {
+        setCartData(prevCart =>
+            prevCart.map(item =>
+                item.productId._id === productId
+                    ? {
+                        ...item,
+                        qty: type === 'inc' ? item.qty + 1 : Math.max(1, item.qty - 1),
+                    }
+                    : item
+            )
+        );
+        await axios.post(`${VITE_PUBLIC_API_URL}/products/${_id}/cart/update`, {
+            productId,
+            qty: type === 'inc' ? cartData.find(item => item.productId._id === productId).qty + 1 : cartData.find(item => item.productId._id === productId).qty - 1
+        }, {
+            withCredentials: true
+        });
+        fetchProduct();
+    };
+
     return (
         <>
             <button
                 className={`${size === 'small'
-                        ? 'bg-red-500 hover:bg-red-600 text-white rounded-full p-2 shadow flex items-center justify-center transition duration-300'
-                        : 'fixed top-6 right-6 bg-red-500 hover:bg-red-600 text-white rounded-full w-14 h-14 shadow-lg text-2xl z-50 transition duration-300'
+                    ? 'bg-red-500 hover:bg-red-600 text-white rounded-full p-2 shadow flex items-center justify-center transition duration-300'
+                    : 'fixed top-6 right-6 bg-red-500 hover:bg-red-600 text-white rounded-full w-14 h-14 shadow-lg text-2xl z-50 transition duration-300'
                     }`}
                 onClick={() => {
                     setShowCart(true);
@@ -43,15 +62,13 @@ const CartButton = ({ size = 'small', showCart: externalShowCart, setShowCart: e
 
             {/* Overlay */}
             <div
-                className={`fixed inset-0 bg-black z-40 transition-opacity duration-300 ${showCart ? 'opacity-50' : 'opacity-0 pointer-events-none'
-                    }`}
+                className={`fixed inset-0 bg-black z-40 transition-opacity duration-300 ${showCart ? 'opacity-50' : 'opacity-0 pointer-events-none'}`}
                 onClick={() => setShowCart(false)}
             ></div>
 
             {/* Cart Drawer */}
             <div
-                className={`fixed right-0 top-0 h-full w-full sm:w-96 bg-white shadow-2xl flex flex-col transition-transform duration-500 transform z-50 ${showCart ? 'translate-x-0' : 'translate-x-full'
-                    } rounded-l-2xl`}
+                className={`fixed right-0 top-0 h-full w-full sm:w-96 bg-white shadow-2xl flex flex-col transition-transform duration-500 transform z-50 ${showCart ? 'translate-x-0' : 'translate-x-full'} rounded-l-2xl`}
             >
                 <div className="flex items-center justify-between p-4 border-b border-gray-200">
                     <h2 className="text-xl font-semibold text-gray-800">Your Cart</h2>
@@ -85,9 +102,15 @@ const CartButton = ({ size = 'small', showCart: externalShowCart, setShowCart: e
                                     </div>
                                 </div>
                                 <div className="flex items-center justify-center gap-2 bg-red-50 px-2 py-1 rounded-full border border-red-300 text-red-600 font-semibold text-sm">
-                                    <button className="px-1 text-lg hover:text-red-700">−</button>
+                                    <button
+                                        className="px-1 text-lg hover:text-red-700"
+                                        onClick={() => updateQty(item.productId._id, 'dec')}
+                                    >−</button>
                                     <span className="min-w-[16px] text-center">{item.qty}</span>
-                                    <button className="px-1 text-lg hover:text-red-700">+</button>
+                                    <button
+                                        className="px-1 text-lg hover:text-red-700"
+                                        onClick={() => updateQty(item.productId._id, 'inc')}
+                                    >+</button>
                                 </div>
                                 <div className="text-right text-base font-semibold text-gray-800 min-w-[60px]">
                                     ₹{item.productId.price * item.qty}
