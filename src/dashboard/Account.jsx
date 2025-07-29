@@ -14,7 +14,7 @@ const Account = (props) => {
                 {/* Profile Image */}
                 <div className="relative w-32 h-32 sm:w-40 sm:h-40 mx-auto mb-6 sm:mb-8 rounded-full overflow-hidden border-4 border-indigo-400 shadow-xl transition-transform duration-300 hover:rotate-3">
                     <img
-                        src={user.profilePicture || 'https://placehold.co/180x180/A0AEC0/FFFFFF?text='+user.name[0]||"AM"}
+                        src={user.profilePicture || 'https://placehold.co/180x180/A0AEC0/FFFFFF?text=AM'}
                         alt="Profile"
                         className="w-full h-full object-cover"
                         onError={(e) => {
