@@ -142,7 +142,7 @@ const Second = () => {
                         </div>
                         {/* Quantity and Add to Cart */}
                         <div className="mt-4 flex gap-4 items-center justify-center md:justify-start bg-white/20 p-3 rounded-xl shadow-inner w-fit mx-auto md:mx-0">
-                            <div>
+                            <div className='flex'>
                                 <button
                                     className="bg-gray-300 hover:bg-gray-400 text-xl px-3 py-1 rounded-l-lg font-bold text-gray-800"
                                     onClick={() => setQuantity(q => Math.max(1, q - 1))}
