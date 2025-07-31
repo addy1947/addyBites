@@ -6,6 +6,59 @@ import { useAuth } from '../context/AuthContext';
 import { Navigate } from 'react-router-dom';
 import { VITE_PUBLIC_API_URL } from '../config';
 
+const AddToCartButton = ({ onClick }) => {
+    const [added, setAdded] = useState(false);
+
+    const handleClick = async () => {
+        await onClick(); // trigger parent function
+        setAdded(true);
+        setTimeout(() => setAdded(false), 3000);
+    };
+
+    return (
+        <button
+            onClick={handleClick}
+            className="relative w-[200px] h-[70px] text-gray-800 font-medium text-lg rounded-[10px] overflow-hidden transition-all duration-300 shadow-[0_10px_20px_rgba(0,0,0,0.2)] bg-gradient-to-b from-neutral-200 to-neutral-400 hover:scale-105 active:scale-100 group"
+        >
+            <div className="absolute inset-0 bg-gradient-to-b from-neutral-200 to-neutral-400 rounded-[10px] z-0 transition-all duration-300 group-hover:scale-[1.04] group-hover:shadow-inner" />
+            <div className="absolute inset-0 rounded-[10px] z-0 opacity-30 blur-lg bg-[conic-gradient(#0d3fe4,#ff52e2,#fd4845,#f7d35b,#50f77d,#25e1e4)] animate-spin" />
+
+            <div className="absolute inset-0 flex items-center justify-center z-10">
+                {!added ? (
+                    <div className="flex items-center gap-2">
+                        <svg
+                            className="w-5 h-5"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <circle cx="8" cy="21" r="1"></circle>
+                            <circle cx="19" cy="21" r="1"></circle>
+                            <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
+                        </svg>
+                        <span className="text">Add to Cart</span>
+                    </div>
+                ) : (
+                    <div className="flex items-center gap-2 text-white">
+                        <svg
+                            className="w-5 h-5"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path d="M20 6 9 17l-5-5"></path>
+                        </svg>
+                        <span className="text">Added</span>
+                    </div>
+                )}
+            </div>
+        </button>
+    );
+};
 
 const Second = () => {
     const { _id } = useParams(); // or productName, depending on your route
@@ -13,7 +66,6 @@ const Second = () => {
     const [quantity, setQuantity] = useState(1);
     const { user, loading } = useAuth();
     const userId = user?._id;
-
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -25,10 +77,7 @@ const Second = () => {
 
     const addcart = async () => {
         await axios.post(`${VITE_PUBLIC_API_URL}/products/cart/${userId}/add?qty=${quantity}&pro=${_id}`, {}, { withCredentials: true });
-        
     };
-
-
 
     if (loading) {
         return <div className="flex items-center justify-center min-h-screen">Checking authentication...</div>;
@@ -37,7 +86,6 @@ const Second = () => {
         return <Navigate to="/login" replace />;
     }
 
-    // Prevent error by checking for null
     if (!single) return <div>Loading...</div>;
 
     return (
@@ -92,7 +140,7 @@ const Second = () => {
                             <div className="flex items-center gap-2"><span className="text-green-300">✔</span> Fresh Ingredients</div>
                             <div className="flex items-center gap-2"><span className="text-green-300">✔</span> Traditional Way of Making</div>
                         </div>
-                        {/* Quantity and Add to Cart (plus/minus buttons) */}
+                        {/* Quantity and Add to Cart */}
                         <div className="mt-4 flex gap-4 items-center justify-center md:justify-start bg-white/20 p-3 rounded-xl shadow-inner w-fit mx-auto md:mx-0">
                             <div>
                                 <button
@@ -111,18 +159,13 @@ const Second = () => {
                                     +
                                 </button>
                             </div>
-
-                            <button onClick={() => {
-                                addcart();
-                            }}
-                                className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg font-semibold shadow transition">Add to Cart</button>
-
+                            <AddToCartButton onClick={addcart} />
                         </div>
                     </div>
                 </div>
             </div>
         </>
     );
-}
+};
 
 export default Second;
