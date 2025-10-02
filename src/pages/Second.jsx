@@ -4,7 +4,8 @@ import { useParams } from 'react-router-dom';
 import Head from '../components/Head';
 import { useAuth } from '../context/AuthContext';
 import { Navigate } from 'react-router-dom';
-import { VITE_PUBLIC_API_URL } from '../config';
+
+const RENDER_WEBSITE_LINK = import.meta.env.VITE_RENDER_WEBSITE_LINK;
 
 const AddToCartButton = ({ onClick }) => {
     const [added, setAdded] = useState(false);
@@ -69,14 +70,14 @@ const Second = () => {
 
     useEffect(() => {
         const fetchProduct = async () => {
-            const res = await axios.get(`${VITE_PUBLIC_API_URL}/products/details/${_id}`);
+            const res = await axios.get(`${RENDER_WEBSITE_LINK}/products/details/${_id}`);
             setSingle(res.data);
         };
         fetchProduct();
     }, []);
 
     const addcart = async () => {
-        await axios.post(`${VITE_PUBLIC_API_URL}/products/cart/${userId}/add?qty=${quantity}&pro=${_id}`, {}, { withCredentials: true });
+        await axios.post(`${RENDER_WEBSITE_LINK}/products/cart/${userId}/add?qty=${quantity}&pro=${_id}`, {}, { withCredentials: true });
     };
 
     if (loading) {

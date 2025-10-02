@@ -6,7 +6,8 @@ import Order from '../dashboard/Order';
 import { FiUser, FiBox, FiMapPin, FiMenu } from 'react-icons/fi';
 import axios from 'axios';
 import { useParams } from 'react-router';
-import { VITE_PUBLIC_API_URL } from '../config';
+
+const RENDER_WEBSITE_LINK = import.meta.env.VITE_RENDER_WEBSITE_LINK;
 
 const Profile = () => {
     const [nav, setNav] = useState("accounts");
@@ -17,7 +18,7 @@ const Profile = () => {
     useEffect(() => {
         const fetchAllProducts = async () => {
             try {
-                const res = await axios.get(`${VITE_PUBLIC_API_URL}/user/${_id}`, { withCredentials: true });
+                const res = await axios.get(`${RENDER_WEBSITE_LINK}/user/${_id}`, { withCredentials: true });
                 setDetail(res.data);
             } catch (error) {
                 if (!axios.isCancel(error)) {

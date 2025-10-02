@@ -1,7 +1,8 @@
 import React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import { VITE_PUBLIC_API_URL } from '../config';
+
+const RENDER_WEBSITE_LINK = import.meta.env.VITE_RENDER_WEBSITE_LINK;
 
 const MealType = (props) => {
     const [mealType, setMealType] = useState("all");
@@ -16,7 +17,7 @@ const MealType = (props) => {
 
         const fetchAllProducts = async () => {
             try {
-                const res = await axios.get(`${VITE_PUBLIC_API_URL}/products/all`, {
+                const res = await axios.get(`${RENDER_WEBSITE_LINK}/products/all`, {
                     signal: controller.signal
                 });
 

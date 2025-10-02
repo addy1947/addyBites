@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
-import { VITE_PUBLIC_API_URL } from '../config.js';
 import { MdDelete } from "react-icons/md";
+
+const RENDER_WEBSITE_LINK = import.meta.env.VITE_RENDER_WEBSITE_LINK;
 
 const CartButton = ({ size = 'small', showCart: externalShowCart, setShowCart: externalSetShowCart }) => {
     const [cartData, setCartData] = useState([]);
@@ -16,7 +17,7 @@ const CartButton = ({ size = 'small', showCart: externalShowCart, setShowCart: e
 
     const fetchProduct = async () => {
         try {
-            const res = await axios.get(`${VITE_PUBLIC_API_URL}/products/${_id}/cart`, {
+            const res = await axios.get(`${RENDER_WEBSITE_LINK}/products/${_id}/cart`, {
                 withCredentials: true
             });
             setCartData(res.data);
@@ -36,7 +37,7 @@ const CartButton = ({ size = 'small', showCart: externalShowCart, setShowCart: e
                     : item
             )
         );
-        await axios.post(`${VITE_PUBLIC_API_URL}/products/${_id}/cart/update`, {
+        await axios.post(`${RENDER_WEBSITE_LINK}/products/${_id}/cart/update`, {
             productId,
             qty: type === 'inc' ? cartData.find(item => item.productId._id === productId).qty + 1 : cartData.find(item => item.productId._id === productId).qty - 1
         }, {
@@ -46,7 +47,7 @@ const CartButton = ({ size = 'small', showCart: externalShowCart, setShowCart: e
     };
 
     const deleteItem = async (productId) => {
-        await axios.post(`${VITE_PUBLIC_API_URL}/products/${_id}/cart/update/delete`, {
+        await axios.post(`${RENDER_WEBSITE_LINK}/products/${_id}/cart/update/delete`, {
             productId
         }, {
             withCredentials: true

@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
-import { VITE_PUBLIC_API_URL } from '../config';
+
+const RENDER_WEBSITE_LINK = import.meta.env.VITE_RENDER_WEBSITE_LINK;
 
 const AuthContext = createContext();
 
@@ -23,7 +24,7 @@ export const AuthProvider = ({ children }) => {
 
     const checkAuthStatus = async () => {
         try {
-            const response = await axios.get(`${VITE_PUBLIC_API_URL}/api/auth/profile`, {
+            const response = await axios.get(`${RENDER_WEBSITE_LINK}/api/auth/profile`, {
                 withCredentials: true
             });
             setUser(response.data);
@@ -37,7 +38,7 @@ export const AuthProvider = ({ children }) => {
     const login = async (email, password) => {
         try {
             const response = await axios.post(
-                `${VITE_PUBLIC_API_URL}/api/auth/login`,
+                `${RENDER_WEBSITE_LINK}/api/auth/login`,
                 { email, password },
                 { withCredentials: true }
             );
@@ -51,7 +52,7 @@ export const AuthProvider = ({ children }) => {
     const register = async (name, email, password) => {
         try {
             const response = await axios.post(
-                `${VITE_PUBLIC_API_URL}/api/auth/register`,
+                `${RENDER_WEBSITE_LINK}/api/auth/register`,
                 { name, email, password },
                 { withCredentials: true }
             );

@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import CartButton from './CartButton';
 import { useAuth } from '../context/AuthContext';
 import { CgProfile } from 'react-icons/cg';
-import { VITE_PUBLIC_API_URL } from '../config';
+
+const RENDER_WEBSITE_LINK = import.meta.env.VITE_RENDER_WEBSITE_LINK;
 
 const Head = (props) => {
     const [query, setQuery] = useState('');
@@ -27,7 +28,7 @@ const Head = (props) => {
 
 
         try {
-            const res = await axios.get(`${VITE_PUBLIC_API_URL}/products/search?q=` + encodeURIComponent(query.trim()));
+            const res = await axios.get(`${RENDER_WEBSITE_LINK}/products/search?q=` + encodeURIComponent(query.trim()));
 
             props.a(res.data);
         } catch (error) {
