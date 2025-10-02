@@ -117,7 +117,7 @@ const SignIn = () => {
 
                     <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-10 pt-6 sm:pt-10 relative z-10">
                         <div className="flex justify-center">
-                            <div className="bg-[#4b3621]/95 backdrop-blur-sm text-white rounded-2xl p-6 sm:p-8 shadow-2xl w-full max-w-md border border-white/10">
+                            <div className="bg-[#4b3621]/95 backdrop-blur-sm text-white rounded-2xl p-4 sm:p-6 md:p-8 lg:p-10 shadow-2xl w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl border border-white/10">
                                 {/* Back Arrow */}
                                 <button
                                     onClick={() => window.history.back()}
@@ -130,58 +130,58 @@ const SignIn = () => {
                                 </button>
 
                                 {/* Hero Section */}
-                                <div className="text-center mb-8">
-                                    <div className="inline-flex items-center justify-center w-16 h-16 bg-white/10 rounded-full mb-4">
-                                        <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <div className="text-center mb-6 sm:mb-8">
+                                    <div className="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 bg-white/10 rounded-full mb-3 sm:mb-4">
+                                        <svg className="w-6 h-6 sm:w-8 sm:h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
                                         </svg>
                                     </div>
-                                    <h2 className="text-4xl font-bold text-white mb-3 bg-gradient-to-r from-white to-gray-200 bg-clip-text text-transparent">
+                                    <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-2 sm:mb-3 bg-gradient-to-r from-white to-gray-200 bg-clip-text text-transparent">
                                         Join AddyBites!
                                     </h2>
-                                    <p className="text-gray-200 text-sm mb-4">
+                                    <p className="text-gray-200 text-xs sm:text-sm mb-3 sm:mb-4 px-2">
                                         Create your account and discover amazing flavors
                                     </p>
-                                    <div className="w-20 h-1 bg-gradient-to-r from-white to-gray-300 mx-auto rounded-full"></div>
+                                    <div className="w-16 sm:w-20 h-1 bg-gradient-to-r from-white to-gray-300 mx-auto rounded-full"></div>
                                 </div>
 
                                 {/* Toggle Buttons */}
-                                <div className="flex gap-2 mb-8 bg-white/10 rounded-xl p-1">
+                                <div className="flex gap-1 sm:gap-2 mb-6 sm:mb-8 bg-white/10 rounded-xl p-1">
                                     <button
                                         onClick={() => navigate('/login')}
-                                        className="flex-1 py-3 px-4 rounded-lg bg-transparent text-white font-semibold transition-all duration-300 transform hover:scale-105 hover:bg-white/10"
+                                        className="flex-1 py-2 sm:py-3 px-3 sm:px-4 rounded-lg bg-transparent text-white font-semibold text-sm sm:text-base transition-all duration-300 transform hover:scale-105 hover:bg-white/10"
                                     >
                                         Login
                                     </button>
                                     <button
-                                        className="flex-1 py-3 px-4 rounded-lg bg-white text-[#4b3621] font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg"
+                                        className="flex-1 py-2 sm:py-3 px-3 sm:px-4 rounded-lg bg-white text-[#4b3621] font-semibold text-sm sm:text-base transition-all duration-300 transform hover:scale-105 shadow-lg"
                                     >
                                         Sign Up
                                     </button>
                                 </div>
 
-                                <form onSubmit={handleSubmit} className="space-y-6">
+                                <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
                                     {/* Name Input */}
-                                    <div className="space-y-2">
-                                        <label className="text-sm font-medium text-gray-200 block">
+                                    <div className="space-y-1 sm:space-y-2">
+                                        <label className="text-xs sm:text-sm font-medium text-gray-200 block">
                                             Full Name
                                         </label>
                                         <div className="relative group">
                                             <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 group-focus-within:text-[#4b3621] transition-colors">
-                                                <FaUser size={16} />
+                                                <FaUser size={14} className="sm:w-4 sm:h-4" />
                                             </div>
                                             <input
                                                 type="text"
                                                 placeholder="Enter your full name"
                                                 value={name}
                                                 onChange={handleNameChange}
-                                                className={`w-full pl-10 pr-4 py-4 bg-white/90 backdrop-blur-sm border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-white/50 focus:bg-white transition-all duration-300 text-[#4b3621] placeholder-gray-400 ${submitted && nameError ? 'border-red-400 focus:ring-red-300' : 'border-white/20 focus:border-white/50'
+                                                className={`w-full pl-9 sm:pl-10 pr-3 sm:pr-4 py-3 sm:py-4 bg-white/90 backdrop-blur-sm border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-white/50 focus:bg-white transition-all duration-300 text-[#4b3621] placeholder-gray-400 text-sm sm:text-base ${submitted && nameError ? 'border-red-400 focus:ring-red-300' : 'border-white/20 focus:border-white/50'
                                                     }`}
                                             />
                                         </div>
                                         {submitted && nameError && (
-                                            <p className="text-red-300 text-sm flex items-center gap-1">
-                                                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                            <p className="text-red-300 text-xs sm:text-sm flex items-center gap-1">
+                                                <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="currentColor" viewBox="0 0 20 20">
                                                     <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                                                 </svg>
                                                 {nameError}
@@ -190,26 +190,26 @@ const SignIn = () => {
                                     </div>
 
                                     {/* Email Input */}
-                                    <div className="space-y-2">
-                                        <label className="text-sm font-medium text-gray-200 block">
+                                    <div className="space-y-1 sm:space-y-2">
+                                        <label className="text-xs sm:text-sm font-medium text-gray-200 block">
                                             Email Address
                                         </label>
                                         <div className="relative group">
                                             <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 group-focus-within:text-[#4b3621] transition-colors">
-                                                <FaEnvelope size={16} />
+                                                <FaEnvelope size={14} className="sm:w-4 sm:h-4" />
                                             </div>
                                             <input
                                                 type="email"
                                                 placeholder="Enter your email"
                                                 value={email}
                                                 onChange={handleEmailChange}
-                                                className={`w-full pl-10 pr-4 py-4 bg-white/90 backdrop-blur-sm border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-white/50 focus:bg-white transition-all duration-300 text-[#4b3621] placeholder-gray-400 ${submitted && emailError ? 'border-red-400 focus:ring-red-300' : 'border-white/20 focus:border-white/50'
+                                                className={`w-full pl-9 sm:pl-10 pr-3 sm:pr-4 py-3 sm:py-4 bg-white/90 backdrop-blur-sm border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-white/50 focus:bg-white transition-all duration-300 text-[#4b3621] placeholder-gray-400 text-sm sm:text-base ${submitted && emailError ? 'border-red-400 focus:ring-red-300' : 'border-white/20 focus:border-white/50'
                                                     }`}
                                             />
                                         </div>
                                         {submitted && emailError && (
-                                            <p className="text-red-300 text-sm flex items-center gap-1">
-                                                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                            <p className="text-red-300 text-xs sm:text-sm flex items-center gap-1">
+                                                <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="currentColor" viewBox="0 0 20 20">
                                                     <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                                                 </svg>
                                                 {emailError}
@@ -218,26 +218,26 @@ const SignIn = () => {
                                     </div>
 
                                     {/* Password Input */}
-                                    <div className="space-y-2">
-                                        <label className="text-sm font-medium text-gray-200 block">
+                                    <div className="space-y-1 sm:space-y-2">
+                                        <label className="text-xs sm:text-sm font-medium text-gray-200 block">
                                             Password
                                         </label>
                                         <div className="relative group">
                                             <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 group-focus-within:text-[#4b3621] transition-colors">
-                                                <FaLock size={16} />
+                                                <FaLock size={14} className="sm:w-4 sm:h-4" />
                                             </div>
                                             <input
                                                 type="password"
                                                 placeholder="Create a strong password"
                                                 value={password}
                                                 onChange={handlePasswordChange}
-                                                className={`w-full pl-10 pr-4 py-4 bg-white/90 backdrop-blur-sm border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-white/50 focus:bg-white transition-all duration-300 text-[#4b3621] placeholder-gray-400 ${submitted && passwordError ? 'border-red-400 focus:ring-red-300' : 'border-white/20 focus:border-white/50'
+                                                className={`w-full pl-9 sm:pl-10 pr-3 sm:pr-4 py-3 sm:py-4 bg-white/90 backdrop-blur-sm border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-white/50 focus:bg-white transition-all duration-300 text-[#4b3621] placeholder-gray-400 text-sm sm:text-base ${submitted && passwordError ? 'border-red-400 focus:ring-red-300' : 'border-white/20 focus:border-white/50'
                                                     }`}
                                             />
                                         </div>
                                         {submitted && passwordError && (
-                                            <p className="text-red-300 text-sm flex items-center gap-1">
-                                                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                            <p className="text-red-300 text-xs sm:text-sm flex items-center gap-1">
+                                                <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="currentColor" viewBox="0 0 20 20">
                                                     <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                                                 </svg>
                                                 {passwordError}
