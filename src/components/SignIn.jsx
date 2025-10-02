@@ -246,8 +246,8 @@ const SignIn = () => {
                                     </div>
 
                                     {/* Password Requirements */}
-                                    <div className="bg-white/5 rounded-lg p-3">
-                                        <p className="text-xs text-gray-300 mb-2">Password requirements:</p>
+                                    <div className="bg-white/5 rounded-lg p-2 sm:p-3">
+                                        <p className="text-xs text-gray-300 mb-1 sm:mb-2">Password requirements:</p>
                                         <ul className="text-xs text-gray-400 space-y-1">
                                             <li className="flex items-center gap-2">
                                                 <div className={`w-1.5 h-1.5 rounded-full ${password.length >= 6 ? 'bg-green-400' : 'bg-gray-500'}`}></div>
@@ -264,11 +264,11 @@ const SignIn = () => {
                                     <button
                                         type="submit"
                                         disabled={isLoading}
-                                        className="w-full bg-gradient-to-r from-white to-gray-100 text-[#4b3621] py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 group"
+                                        className="w-full bg-gradient-to-r from-white to-gray-100 text-[#4b3621] py-3 sm:py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 group text-sm sm:text-base"
                                     >
                                         {isLoading ? (
                                             <>
-                                                <svg className="animate-spin -ml-1 mr-2 h-5 w-5" fill="none" viewBox="0 0 24 24">
+                                                <svg className="animate-spin -ml-1 mr-2 h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24">
                                                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                                                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                                 </svg>
@@ -277,7 +277,7 @@ const SignIn = () => {
                                         ) : (
                                             <>
                                                 Create Account
-                                                <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <svg className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                                                 </svg>
                                             </>
@@ -285,8 +285,8 @@ const SignIn = () => {
                                     </button>
 
                                     {/* Additional Info */}
-                                    <div className="text-center pt-4">
-                                        <p className="text-xs text-gray-300">
+                                    <div className="text-center pt-3 sm:pt-4">
+                                        <p className="text-xs text-gray-300 px-2">
                                             By creating an account, you agree to our 
                                             <a href="#" className="text-white hover:underline ml-1">Terms of Service</a> 
                                             and 
@@ -295,23 +295,23 @@ const SignIn = () => {
                                     </div>
 
                                     {/* Benefits Section */}
-                                    <div className="bg-white/5 rounded-lg p-4 mt-6">
-                                        <h3 className="text-sm font-semibold text-white mb-3">What you'll get:</h3>
-                                        <div className="space-y-2 text-xs text-gray-300">
+                                    <div className="bg-white/5 rounded-lg p-3 sm:p-4 mt-4 sm:mt-6">
+                                        <h3 className="text-xs sm:text-sm font-semibold text-white mb-2 sm:mb-3">What you'll get:</h3>
+                                        <div className="space-y-1 sm:space-y-2 text-xs text-gray-300">
                                             <div className="flex items-center gap-2">
-                                                <svg className="w-4 h-4 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                                                <svg className="w-3 h-3 sm:w-4 sm:h-4 text-green-400" fill="currentColor" viewBox="0 0 20 20">
                                                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                                                 </svg>
                                                 Access to exclusive menu items
                                             </div>
                                             <div className="flex items-center gap-2">
-                                                <svg className="w-4 h-4 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                                                <svg className="w-3 h-3 sm:w-4 sm:h-4 text-green-400" fill="currentColor" viewBox="0 0 20 20">
                                                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                                                 </svg>
                                                 Faster checkout process
                                             </div>
                                             <div className="flex items-center gap-2">
-                                                <svg className="w-4 h-4 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                                                <svg className="w-3 h-3 sm:w-4 sm:h-4 text-green-400" fill="currentColor" viewBox="0 0 20 20">
                                                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                                                 </svg>
                                                 Order history and favorites
