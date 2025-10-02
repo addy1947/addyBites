@@ -7,56 +7,48 @@ import { Navigate } from 'react-router-dom';
 
 const RENDER_WEBSITE_LINK = import.meta.env.VITE_RENDER_WEBSITE_LINK;
 
-const AddToCartButton = ({ onClick }) => {
+const AddToCartButton = ({ onClick, isLoading }) => {
     const [added, setAdded] = useState(false);
 
     const handleClick = async () => {
-        await onClick(); // trigger parent function
+        if (isLoading) return;
+        await onClick();
         setAdded(true);
-        setTimeout(() => setAdded(false), 3000);
+        setTimeout(() => setAdded(false), 2000);
     };
 
     return (
         <button
             onClick={handleClick}
-            className="relative w-[200px] h-[70px] text-gray-800 font-medium text-lg rounded-[10px] overflow-hidden transition-all duration-300 shadow-[0_10px_20px_rgba(0,0,0,0.2)] bg-gradient-to-b from-neutral-200 to-neutral-400 hover:scale-105 active:scale-100 group"
+            disabled={isLoading}
+            className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center gap-2 ${
+                isLoading
+                    ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                    : added 
+                        ? 'bg-green-500 text-white scale-105' 
+                        : 'bg-white text-[#4b3621] hover:bg-gray-100 hover:scale-105 active:scale-95'
+            }`}
         >
-            <div className="absolute inset-0 bg-gradient-to-b from-neutral-200 to-neutral-400 rounded-[10px] z-0 transition-all duration-300 group-hover:scale-[1.04] group-hover:shadow-inner" />
-            <div className="absolute inset-0 rounded-[10px] z-0 opacity-30 blur-lg bg-[conic-gradient(#0d3fe4,#ff52e2,#fd4845,#f7d35b,#50f77d,#25e1e4)] animate-spin" />
-
-            <div className="absolute inset-0 flex items-center justify-center z-10">
-                {!added ? (
-                    <div className="flex items-center gap-2">
-                        <svg
-                            className="w-5 h-5"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <circle cx="8" cy="21" r="1"></circle>
-                            <circle cx="19" cy="21" r="1"></circle>
-                            <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
-                        </svg>
-                        <span className="text">Add to Cart</span>
-                    </div>
-                ) : (
-                    <div className="flex items-center gap-2 text-white">
-                        <svg
-                            className="w-5 h-5"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path d="M20 6 9 17l-5-5"></path>
-                        </svg>
-                        <span className="text">Added</span>
-                    </div>
-                )}
-            </div>
+            {isLoading ? (
+                <>
+                    <div className="w-5 h-5 border-2 border-gray-400 border-t-transparent rounded-full animate-spin"></div>
+                    Adding...
+                </>
+            ) : added ? (
+                <>
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    Added!
+                </>
+            ) : (
+                <>
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m6-5v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01" />
+                    </svg>
+                    Add to Cart
+                </>
+            )}
         </button>
     );
 };
@@ -65,6 +57,7 @@ const Second = () => {
     const { _id } = useParams(); // or productName, depending on your route
     const [single, setSingle] = useState();
     const [quantity, setQuantity] = useState(1);
+    const [isAddingToCart, setIsAddingToCart] = useState(false);
     const { user, loading } = useAuth();
     const userId = user?._id;
 
@@ -77,7 +70,14 @@ const Second = () => {
     }, []);
 
     const addcart = async () => {
-        await axios.post(`${RENDER_WEBSITE_LINK}/products/cart/${userId}/add?qty=${quantity}&pro=${_id}`, {}, { withCredentials: true });
+        setIsAddingToCart(true);
+        try {
+            await axios.post(`${RENDER_WEBSITE_LINK}/products/cart/${userId}/add?qty=${quantity}&pro=${_id}`, {}, { withCredentials: true });
+        } catch (error) {
+            console.error('Error adding to cart:', error);
+        } finally {
+            setIsAddingToCart(false);
+        }
     };
 
     if (loading) {
@@ -94,73 +94,126 @@ const Second = () => {
             <div className='sticky top-0 z-50 bg-white shadow-md'>
                 <Head />
             </div>
+            
+            {/* Loading Overlay */}
+            {isAddingToCart && (
+                <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center">
+                    <div className="bg-white rounded-2xl p-8 shadow-2xl flex flex-col items-center gap-4">
+                        <div className="relative">
+                            <div className="w-16 h-16 border-4 border-gray-200 rounded-full"></div>
+                            <div className="absolute top-0 left-0 w-16 h-16 border-4 border-[#4b3621] border-t-transparent rounded-full animate-spin"></div>
+                        </div>
+                        <p className="text-[#4b3621] font-semibold text-lg">Adding to Cart...</p>
+                    </div>
+                </div>
+            )}
+            
             <div
-                className="min-h-screen py-10 flex items-center justify-center"
+                className="min-h-screen py-8 flex items-center justify-center"
                 style={{
                     backgroundImage: "url('/image/bg.png')",
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                 }}
             >
-                <div className="w-full max-w-6xl mx-auto bg-white/10 backdrop-blur-md text-white rounded-2xl p-8 shadow-2xl flex flex-col md:flex-row items-center gap-8 min-h-[600px]">
-                    {/* Product Image */}
-                    <div className="flex-shrink-0 flex justify-center w-full md:w-auto">
-                        <img
-                            src={single[0].image}
-                            alt={single[0].name}
-                            className="w-[32rem] h-[32rem] object-cover rounded-2xl border-4 border-white shadow-lg"
-                        />
-                    </div>
-                    {/* Product Details */}
-                    <div className="flex flex-col flex-grow gap-4 text-center md:text-left w-full">
-                        <div className="text-3xl font-bold">{single[0].name}</div>
-                        <div className="inline-block bg-gray-400 text-gray-900 px-4 py-1 rounded-full text-lg font-medium w-fit mx-auto md:mx-0">
-                            {single[0].cuisine}
-                        </div>
-                        <div className="flex justify-center md:justify-start">
-                            <span className="bg-red-500 text-white text-lg font-bold px-4 py-1 rounded-lg">
-                                ₹{single[0].price}
-                            </span>
-                        </div>
-                        <div className="text-gray-200 text-base bg-white/20 rounded-xl p-4 shadow-inner">
-                            {single[0].description}
-                        </div>
-                        {/* Category tags */}
-                        {single[0].category && (
-                            <div className="flex flex-wrap gap-2 justify-center md:justify-start mt-2">
-                                {single[0].category.map((item, i) => (
-                                    <span key={i} className="bg-yellow-200 text-yellow-800 px-3 py-1 rounded-full text-sm font-semibold shadow">
-                                        {item}
-                                    </span>
-                                ))}
+                <div className="w-full max-w-5xl mx-auto px-4">
+                    <div className="bg-[#4b3621]/95 backdrop-blur-sm text-white rounded-2xl p-6 sm:p-8 shadow-2xl">
+                        <div className="flex flex-col lg:flex-row gap-8">
+                            {/* Product Image */}
+                            <div className="flex-shrink-0 flex justify-center lg:justify-start">
+                                <img
+                                    src={single[0].image}
+                                    alt={single[0].name}
+                                    className="w-80 h-80 sm:w-96 sm:h-96 object-cover rounded-2xl border-2 border-white/20 shadow-lg"
+                                />
                             </div>
-                        )}
-                        {/* Features */}
-                        <div className="flex flex-col gap-1 mt-2 text-gray-100">
-                            <div className="flex items-center gap-2"><span className="text-green-300">✔</span> Premium Quality</div>
-                            <div className="flex items-center gap-2"><span className="text-green-300">✔</span> Fresh Ingredients</div>
-                            <div className="flex items-center gap-2"><span className="text-green-300">✔</span> Traditional Way of Making</div>
-                        </div>
-                        {/* Quantity and Add to Cart */}
-                        <div className="mt-4 flex gap-4 items-center justify-center md:justify-start bg-white/20 p-3 rounded-xl shadow-inner w-fit mx-auto md:mx-0">
-                            <div className='flex'>
-                                <button
-                                    className="bg-gray-300 hover:bg-gray-400 text-xl px-3 py-1 rounded-l-lg font-bold text-gray-800"
-                                    onClick={() => setQuantity(q => Math.max(1, q - 1))}
-                                    aria-label="Decrease quantity"
-                                >
-                                    -
-                                </button>
-                                <span className="px-4 py-2 border-t border-b text-lg bg-white text-gray-900">{quantity}</span>
-                                <button
-                                    className="bg-gray-300 hover:bg-gray-400 text-xl px-3 py-1 rounded-r-lg font-bold text-gray-800"
-                                    onClick={() => setQuantity(q => Math.min(5, q + 1))}
-                                    aria-label="Increase quantity"
-                                >
-                                    +
-                                </button>
+                            
+                            {/* Product Details */}
+                            <div className="flex flex-col gap-6 flex-grow">
+                                <div>
+                                    <h1 className="text-3xl sm:text-4xl font-bold mb-2">{single[0].name}</h1>
+                                    <div className="inline-block bg-white/20 text-white px-3 py-1 rounded-full text-sm font-medium">
+                                        {single[0].cuisine}
+                                    </div>
+                                </div>
+                                
+                                <div className="text-2xl sm:text-3xl font-bold text-white">
+                                    ₹{single[0].price}
+                                </div>
+                                
+                                <div className="text-gray-200 text-base leading-relaxed">
+                                    {single[0].description}
+                                </div>
+                                
+                                {/* Category tags */}
+                                {single[0].category && (
+                                    <div className="flex flex-wrap gap-2">
+                                        {single[0].category.map((item, i) => (
+                                            <span key={i} className="bg-white/20 text-white px-3 py-1 rounded-full text-sm">
+                                                {item}
+                                            </span>
+                                        ))}
+                                    </div>
+                                )}
+                                
+                                {/* Features */}
+                                <div className="space-y-2 text-gray-200">
+                                    <div className="flex items-center gap-2">
+                                        <svg className="w-4 h-4 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                        </svg>
+                                        Premium Quality
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <svg className="w-4 h-4 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                        </svg>
+                                        Fresh Ingredients
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <svg className="w-4 h-4 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                        </svg>
+                                        Traditional Preparation
+                                    </div>
+                                </div>
+                                
+                                {/* Quantity and Add to Cart */}
+                                <div className="flex flex-col sm:flex-row gap-4 items-center">
+                                    <div className="flex items-center bg-white/20 rounded-xl p-1">
+                                        <button
+                                            className={`w-10 h-10 flex items-center justify-center text-white rounded-lg transition-colors ${
+                                                isAddingToCart 
+                                                    ? 'opacity-50 cursor-not-allowed' 
+                                                    : 'hover:bg-white/20'
+                                            }`}
+                                            onClick={() => !isAddingToCart && setQuantity(q => Math.max(1, q - 1))}
+                                            disabled={isAddingToCart}
+                                            aria-label="Decrease quantity"
+                                        >
+                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
+                                            </svg>
+                                        </button>
+                                        <span className="px-4 py-2 text-lg font-semibold min-w-[3rem] text-center">{quantity}</span>
+                                        <button
+                                            className={`w-10 h-10 flex items-center justify-center text-white rounded-lg transition-colors ${
+                                                isAddingToCart 
+                                                    ? 'opacity-50 cursor-not-allowed' 
+                                                    : 'hover:bg-white/20'
+                                            }`}
+                                            onClick={() => !isAddingToCart && setQuantity(q => Math.min(5, q + 1))}
+                                            disabled={isAddingToCart}
+                                            aria-label="Increase quantity"
+                                        >
+                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <AddToCartButton onClick={addcart} isLoading={isAddingToCart} />
+                                </div>
                             </div>
-                            <AddToCartButton onClick={addcart} />
                         </div>
                     </div>
                 </div>
