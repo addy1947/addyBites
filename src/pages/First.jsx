@@ -54,8 +54,26 @@ const First = () => {
                                     </Link>
                                 ))
                             ) : (
-                                <div className="col-span-full text-center text-white text-lg py-8">
-                                    {Array.isArray(data) ? "No products found" : "Loading products..."}
+                                <div className="col-span-full text-center text-white py-8">
+                                    {Array.isArray(data) ? (
+                                        <div className="flex flex-col items-center gap-4">
+                                            <div className="inline-flex items-center justify-center w-16 h-16 bg-white/10 rounded-full">
+                                                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.29-1.009-5.824-2.57M15 6.343A7.962 7.962 0 0112 5c-2.34 0-4.29 1.009-5.824 2.57" />
+                                                </svg>
+                                            </div>
+                                            <h3 className="text-xl font-semibold">No products found</h3>
+                                            <p className="text-gray-200">Try adjusting your filters or check back later</p>
+                                        </div>
+                                    ) : (
+                                        <div className="flex flex-col items-center gap-4">
+                                            <div className="relative">
+                                                <div className="w-16 h-16 border-4 border-white/20 rounded-full"></div>
+                                                <div className="absolute top-0 left-0 w-16 h-16 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+                                            </div>
+                                            <p className="text-white font-semibold text-lg">Loading products...</p>
+                                        </div>
+                                    )}
                                 </div>
                             )}
                         </div>

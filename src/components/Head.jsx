@@ -39,7 +39,7 @@ const Head = (props) => {
 
     return (
         <>
-            <div className="bg-gray-700 px-4 py-4 flex flex-col items-center justify-between w-full
+            <div className="bg-gray-500 px-4 py-4 flex flex-col items-center justify-between w-full
                             sm:px-8 sm:py-4 sm:flex-row sm:gap-4 sm:items-center">
                 <div className="flex flex-col items-center w-full mb-2
                                 sm:items-start sm:w-auto sm:mb-0">
