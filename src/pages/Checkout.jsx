@@ -84,144 +84,193 @@ const Checkout = () => {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-100 to-slate-200">
-            <Head />
-            <div className="max-w-6xl mx-auto px-4 py-6">
-                <h2 className="text-3xl font-extrabold text-gray-800 flex items-center gap-3 mb-8">
-                    <FaShoppingCart className="text-green-600 text-3xl" />
-                    Checkout
-                </h2>
+        <>
+            {/* Header - Sticky only for tablets/desktops */}
+            <div className="bg-white shadow-md md:sticky md:top-0 md:z-50">
+                <Head />
+            </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    {/* Left Section */}
-                    <div className="lg:col-span-2 space-y-8">
-                        {/* Cart Items */}
-                        <div className="bg-white rounded-2xl shadow-lg p-6">
-                            <h3 className="text-2xl font-semibold text-gray-800 mb-4">🛍️ Your Items</h3>
-                            {cart.length === 0 ? (
-                                <p className="text-gray-500 text-center">Your cart is empty.</p>
-                            ) : (
-                                cart.map((item) => (
-                                    <div
-                                        key={item.productId._id}
-                                        className="flex items-center justify-between border-b border-gray-100 py-4"
-                                    >
-                                        <div className="flex items-center gap-4">
-                                            <img
-                                                src={item.productId.image}
-                                                alt={item.productId.name}
-                                                className="w-16 h-16 rounded-lg object-cover border border-gray-200"
-                                            />
-                                            <div>
-                                                <h4 className="text-lg font-medium text-gray-800">
-                                                    {item.productId.name}
-                                                </h4>
-                                                <p className="text-sm text-gray-500">₹{item.productId.price}</p>
-                                            </div>
-                                        </div>
-                                        <div className="text-right">
-                                            <p className="text-sm text-gray-600">Qty: {item.qty}</p>
-                                            <p className="text-md font-semibold text-green-700">
-                                                ₹{item.productId.price * item.qty}
-                                            </p>
-                                        </div>
-                                    </div>
-                                ))
-                            )}
+            {/* Main scrollable section with smooth behavior */}
+            <div className="mt-4 scroll-smooth">
+                <div
+                    className="min-h-screen py-8 sm:py-10"
+                    style={{
+                        backgroundImage: "url('/image/bg.png')",
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                    }}
+                >
+                    <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-10 pt-6 sm:pt-10">
+                        <div className="text-center mb-8">
+                            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-2 bg-gradient-to-r from-white to-gray-200 bg-clip-text text-transparent">
+                                Your Cart
+                            </h2>
+                            <p className="text-gray-200 text-sm">
+                                Review your items and proceed to checkout
+                            </p>
                         </div>
 
-                        {/* Address Section */}
-                        <div className="bg-white rounded-2xl shadow-lg p-6">
-                            <div className="flex items-center justify-between mb-4">
-                                <h3 className="text-2xl font-semibold text-gray-800">📍 Delivery Address</h3>
-                                <Link to={`/user/${_id}/saveaddress`}>Add New Address</Link>
-                                <button
-                                    onClick={() => setShowAddress(!showAddress)}
-                                    className="text-blue-600 hover:underline font-medium text-sm"
-                                >
-                                    {showAddress ? 'Hide Address' : 'Show Address'}
-                                </button>
-                            </div>
-
-                            {showAddress && (
-                                address.length === 0 ? (
-                                    <p className="text-gray-500 text-center">No address found.</p>
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            {/* Cart Items */}
+                            <div className="lg:col-span-2 space-y-6">
+                                {cart.length === 0 ? (
+                                    <div className="bg-[#4b3621]/95 backdrop-blur-sm text-white rounded-xl p-8 shadow-lg text-center">
+                                        <div className="inline-flex items-center justify-center w-16 h-16 bg-white/10 rounded-full mb-4">
+                                            <FaShoppingCart className="w-8 h-8 text-white" />
+                                        </div>
+                                        <h3 className="text-xl font-semibold mb-2">Your cart is empty</h3>
+                                        <p className="text-gray-200">Add some delicious items to get started!</p>
+                                    </div>
                                 ) : (
-                                    <div className="space-y-6">
-                                        {address.map((item, index) => (
+                                    <div className="space-y-4">
+                                        {cart.map((item) => (
                                             <div
-                                                key={index}
-                                                className={`rounded-xl p-5 border transition-shadow duration-200 ${selectedAddress === item._id
-                                                    ? 'border-blue-500 shadow-lg'
-                                                    : 'border-gray-200 shadow-md hover:shadow-lg'
-                                                    }`}
+                                                key={item.productId._id}
+                                                className="bg-[#4b3621]/95 backdrop-blur-sm text-white rounded-xl p-4 shadow-lg transition hover:shadow-xl"
                                             >
-                                                <div className="space-y-1">
-                                                    <p className="text-base text-gray-700"><span className="font-semibold">Name:</span> {item.name}</p>
-                                                    <p className="text-sm text-gray-600"><span className="font-medium">Building:</span> {item.buildingNumber}</p>
-                                                    <p className="text-sm text-gray-600"><span className="font-medium">Landmark:</span> {item.landmark}</p>
-                                                    <p className="text-sm text-gray-600"><span className="font-medium">City:</span> {item.city}</p>
-                                                    <p className="text-sm text-gray-600"><span className="font-medium">District:</span> {item.district}</p>
-                                                    <p className="text-sm text-gray-600"><span className="font-medium">State:</span> {item.state}</p>
-                                                    <p className="text-sm text-gray-600"><span className="font-medium">Pincode:</span> {item.pincode}</p>
+                                                <div className="flex items-start gap-4">
+                                                    <div className="flex-shrink-0">
+                                                        <img
+                                                            src={item.productId.image}
+                                                            alt={item.productId.name}
+                                                            className="w-16 h-16 object-cover rounded-full border-2 border-white"
+                                                        />
+                                                    </div>
+                                                    <div className="flex flex-col flex-grow">
+                                                        <div className="flex justify-between items-start">
+                                                            <h3 className="text-base font-semibold">{item.productId.name}</h3>
+                                                            <span className="bg-red-500 text-white text-sm font-bold px-3 py-1 rounded-lg">
+                                                                ₹{item.productId.price * item.qty}
+                                                            </span>
+                                                        </div>
+                                                        <div className="flex justify-between items-center mt-2">
+                                                            <p className="text-sm text-gray-300">
+                                                                ₹{item.productId.price} each
+                                                            </p>
+                                                            <div className="flex items-center gap-2">
+                                                                <span className="text-sm text-gray-300">Qty:</span>
+                                                                <span className="bg-white/20 text-white px-2 py-1 rounded text-sm font-semibold">
+                                                                    {item.qty}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <button
-                                                    onClick={() => setSelectedAddress(item._id)}
-                                                    className={`mt-4 px-4 py-2 rounded-md font-medium text-white ${selectedAddress === item._id
-                                                        ? 'bg-blue-600'
-                                                        : 'bg-blue-500 hover:bg-blue-600'
-                                                        }`}
-                                                >
-                                                    {selectedAddress === item._id ? 'Selected' : 'Choose Address'}
-                                                </button>
                                             </div>
                                         ))}
                                     </div>
-                                )
-                            )}
-                        </div>
-                    </div>
+                                )}
+                            </div>
 
-                    {/* Right Section */}
-                    <div className="bg-white rounded-2xl shadow-xl p-6 h-fit sticky top-8">
-                        <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
-                            <FaCreditCard className="text-purple-600" />
-                            Payment Summary
-                        </h3>
-                        <div className="space-y-2 text-gray-700">
-                            <div className="flex justify-between">
-                                <span>Subtotal</span>
-                                <span>₹{total.toFixed(2)}</span>
+                            {/* Address Section */}
+                            <div className="bg-[#4b3621]/95 backdrop-blur-sm text-white rounded-xl p-6 shadow-lg">
+                                <div className="flex items-center justify-between mb-4">
+                                    <h3 className="text-xl font-semibold flex items-center gap-2">
+                                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        </svg>
+                                        Delivery Address
+                                    </h3>
+                                    <div className="flex gap-2">
+                                        <Link 
+                                            to={`/user/${_id}/saveaddress`}
+                                            className="text-white/80 hover:text-white text-sm underline"
+                                        >
+                                            Add New
+                                        </Link>
+                                        <button
+                                            onClick={() => setShowAddress(!showAddress)}
+                                            className="text-white/80 hover:text-white text-sm underline"
+                                        >
+                                            {showAddress ? 'Hide' : 'Show'}
+                                        </button>
+                                    </div>
+                                </div>
+
+                                {showAddress && (
+                                    address.length === 0 ? (
+                                        <p className="text-gray-300 text-center py-4">No address found.</p>
+                                    ) : (
+                                        <div className="space-y-4">
+                                            {address.map((item, index) => (
+                                                <div
+                                                    key={index}
+                                                    className={`rounded-lg p-4 border-2 transition-all duration-200 ${
+                                                        selectedAddress === item._id
+                                                            ? 'border-white shadow-lg bg-white/10'
+                                                            : 'border-white/20 hover:border-white/40'
+                                                    }`}
+                                                >
+                                                    <div className="space-y-2 text-sm">
+                                                        <p className="font-semibold">{item.name}</p>
+                                                        <p className="text-gray-300">{item.buildingNumber}, {item.landmark}</p>
+                                                        <p className="text-gray-300">{item.city}, {item.district}</p>
+                                                        <p className="text-gray-300">{item.state} - {item.pincode}</p>
+                                                    </div>
+                                                    <button
+                                                        onClick={() => setSelectedAddress(item._id)}
+                                                        className={`mt-3 px-4 py-2 rounded-lg font-medium text-sm transition-colors ${
+                                                            selectedAddress === item._id
+                                                                ? 'bg-white text-[#4b3621]'
+                                                                : 'bg-white/20 text-white hover:bg-white/30'
+                                                        }`}
+                                                    >
+                                                        {selectedAddress === item._id ? 'Selected' : 'Choose Address'}
+                                                    </button>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )
+                                )}
                             </div>
-                            <div className="flex justify-between">
-                                <span>Delivery</span>
-                                <span>₹{deliveryCharge}</span>
+                        </div>
+
+                        {/* Payment Summary */}
+                        <div className="lg:col-span-1">
+                            <div className="bg-[#4b3621]/95 backdrop-blur-sm text-white rounded-xl p-6 shadow-lg sticky top-8">
+                                <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+                                    <FaCreditCard className="text-white" />
+                                    Payment Summary
+                                </h3>
+                                <div className="space-y-3 text-sm">
+                                    <div className="flex justify-between">
+                                        <span className="text-gray-300">Subtotal</span>
+                                        <span>₹{total.toFixed(2)}</span>
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <span className="text-gray-300">Delivery</span>
+                                        <span>₹{deliveryCharge}</span>
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <span className="text-gray-300">Discount</span>
+                                        <span>- ₹{discount}</span>
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <span className="text-gray-300">Tax (5%)</span>
+                                        <span>₹{tax.toFixed(2)}</span>
+                                    </div>
+                                    <hr className="my-3 border-white/20" />
+                                    <div className="flex justify-between text-lg font-bold">
+                                        <span>Total</span>
+                                        <span>₹{toPay}</span>
+                                    </div>
+                                    <button
+                                        disabled={cart.length === 0}
+                                        className={`w-full mt-4 bg-white text-[#4b3621] font-semibold py-3 rounded-xl transition-all duration-300 hover:scale-105 ${
+                                            cart.length === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-100'
+                                        }`}
+                                        onClick={handleOrder}
+                                    >
+                                        Proceed to Pay ₹{toPay}
+                                    </button>
+                                </div>
                             </div>
-                            <div className="flex justify-between">
-                                <span>Discount</span>
-                                <span>- ₹{discount}</span>
-                            </div>
-                            <div className="flex justify-between">
-                                <span>Tax (5%)</span>
-                                <span>₹{tax.toFixed(2)}</span>
-                            </div>
-                            <hr className="my-2" />
-                            <div className="flex justify-between text-lg font-bold">
-                                <span>Total</span>
-                                <span>₹{toPay}</span>
-                            </div>
-                            <button
-                                disabled={cart.length === 0}
-                                className={`w-full mt-4 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold py-3 rounded-xl shadow transition duration-300 ${cart.length === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
-                                onClick={handleOrder}
-                            >
-                                Proceed to Pay ₹{toPay}
-                            </button>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 
