@@ -81,7 +81,7 @@ const CartButton = ({ size = 'small', showCart: externalShowCart, setShowCart: e
 
             {/* Cart Drawer */}
             <div
-                className={`fixed right-0 top-0 h-full w-full sm:w-96 bg-gradient-to-br from-[#4b3621] to-[#6b4c2a] shadow-2xl flex flex-col transition-transform duration-500 transform z-50 ${showCart ? 'translate-x-0' : 'translate-x-full'} rounded-l-2xl`}
+                className={`fixed right-0 top-0 h-full w-full sm:w-96 bg-gray-900 border-l border-gray-800 shadow-2xl flex flex-col transition-transform duration-500 transform z-50 ${showCart ? 'translate-x-0' : 'translate-x-full'}`}
             >
                 <div className="flex items-center justify-between p-4 border-b border-orange-200/30">
                     <h2 className="text-xl font-semibold text-white flex items-center gap-2">

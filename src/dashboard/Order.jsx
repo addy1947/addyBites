@@ -39,18 +39,18 @@ const Order = ({ a }) => {
     };
 
     return (
-        <div className="p-4 md:p-6 bg-green-50 min-h-screen space-y-6">
+        <div className="p-4 md:p-6 space-y-6 w-full">
             {a.order.map((item, index) => {
                 const status = getStatus(item.time);
                 const { icon, style } = getBadge(status);
 
                 return (
-                    <div key={index} className="bg-white p-4 md:p-6 rounded-xl shadow border max-w-xl mx-auto space-y-4">
+                    <div key={index} className="bg-gray-800 p-4 md:p-6 rounded-xl shadow-lg border border-gray-700 max-w-xl mx-auto space-y-4">
                         {/* Status + Address */}
                         <div className="flex flex-col md:flex-row justify-between gap-4 md:items-start">
                             <div>
-                                <h2 className="text-base md:text-lg font-semibold text-green-900">Order Status</h2>
-                                <div className="flex items-start gap-2 text-green-800 text-sm mt-1">
+                                <h2 className="text-base md:text-lg font-semibold text-white">Order Status</h2>
+                                <div className="flex items-start gap-2 text-gray-400 text-sm mt-1">
                                     <MdLocationOn className="mt-0.5 text-xl" />
                                     <span>
                                         {item.address?.name
@@ -69,37 +69,37 @@ const Order = ({ a }) => {
                         <div className="space-y-3">
                             {item.orderedproduct?.length ? (
                                 item.orderedproduct.map((p, i) => (
-                                    <div key={i} className="flex flex-col sm:flex-row justify-between sm:items-center p-3 bg-green-50 rounded-lg border gap-3">
+                                    <div key={i} className="flex flex-col sm:flex-row justify-between sm:items-center p-3 bg-gray-700/50 rounded-lg border border-gray-600 gap-3">
                                         <div className="flex items-center gap-3">
                                             <img
                                                 src={p.productId?.image || '/placeholder.jpg'}
                                                 alt={p.productId?.name || 'Product'}
-                                                className="w-16 h-16 object-cover rounded border"
+                                                className="w-16 h-16 object-cover rounded border border-gray-600"
                                             />
                                             <div>
-                                                <div className="text-green-900 font-medium text-sm sm:text-base">
+                                                <div className="text-white font-medium text-sm sm:text-base">
                                                     {p.productId?.name || 'Product Name'}
                                                 </div>
-                                                <div className="text-green-700 text-xs sm:text-sm">
+                                                <div className="text-orange-400 text-xs sm:text-sm">
                                                     ₹{p.productId?.price || 0}
                                                 </div>
                                             </div>
                                         </div>
                                         <div className="text-right sm:text-left">
-                                            <div className="text-green-700 text-sm">x{p.qty || 0}</div>
-                                            <div className="text-green-900 font-semibold text-sm">
+                                            <div className="text-gray-400 text-sm">x{p.qty || 0}</div>
+                                            <div className="text-white font-semibold text-sm">
                                                 ₹{(p.qty || 0) * (p.productId?.price || 0)}
                                             </div>
                                         </div>
                                     </div>
                                 ))
                             ) : (
-                                <div className="text-green-700 text-center text-sm">No products in this order.</div>
+                                <div className="text-gray-400 text-center text-sm">No products in this order.</div>
                             )}
                         </div>
 
                         {/* Total */}
-                        <div className="text-right text-base md:text-lg font-bold text-green-900">
+                        <div className="text-right text-base md:text-lg font-bold text-orange-500">
                             Total Paid: ₹{item.paidAmount || 0}
                         </div>
                     </div>

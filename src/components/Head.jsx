@@ -38,120 +38,81 @@ const Head = (props) => {
     };
 
     return (
-        <>
-            <div className="bg-gray-500 px-4 py-4 flex flex-col items-center justify-between w-full
-                            sm:px-8 sm:py-4 sm:flex-row sm:gap-4 sm:items-center">
-                <div className="flex flex-col items-center w-full mb-2
-                                sm:items-start sm:w-auto sm:mb-0">
-                    <Link to="/">
-                        <h1 className="cursor-pointer text-3xl font-extrabold tracking-tight bg-gradient-to-br from-pink-500 via-red-500 to-orange-400 bg-clip-text text-transparent shadow-lg text-center
-                                       sm:text-4xl md:text-5xl sm:text-left">
-                            Addy<span className="text-yellow-400 drop-shadow-md">Bites</span>
-                        </h1>
-                    </Link>
-                </div>
-                {/* Combined right section for search, auth, and cart button */}
-                <div className="flex flex-col gap-3 w-full items-center justify-center flex-wrap
-                                sm:flex-row sm:w-auto sm:justify-end sm:flex-grow-0 sm:gap-4"> {/* Increased gap for better spacing on larger screens */}
-                    <form onSubmit={handleSubmit} className="w-full flex-1 min-w-[180px] max-w-full
-                                                            sm:w-auto sm:max-w-xs md:max-w-sm"> {/* Added max-width for search bar */}
-                        <div className="relative w-full min-w-[150px]">
+        <div className="sticky top-0 z-50 bg-gray-900/95 backdrop-blur-md border-b border-gray-800 shadow-lg transition-all duration-300">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="flex flex-col md:flex-row items-center justify-between py-4 gap-4">
+
+                    {/* Logo */}
+                    <div className="flex-shrink-0">
+                        <Link to="/" className="group flex items-center gap-2">
+                            <span className="text-3xl font-extrabold bg-gradient-to-r from-orange-500 to-red-600 bg-clip-text text-transparent group-hover:from-orange-400 group-hover:to-red-500 transition-all duration-300">
+                                Addy<span className="text-white">Bites</span>
+                            </span>
+                        </Link>
+                    </div>
+
+                    {/* Search Bar */}
+                    <div className="w-full max-w-md relative group">
+                        <form onSubmit={handleSubmit} className="relative">
                             <input
                                 type="text"
-                                placeholder="Search food..."
-                                className="w-full px-4 py-2 pl-10 text-black rounded-full border-2 border-red-500 focus:outline-none focus:ring-2 focus:ring-red-400 shadow-md text-base
-                                           sm:w-64 md:w-80 sm:text-lg"
+                                placeholder="Search for delicious food..."
+                                className="w-full bg-gray-800 text-gray-200 rounded-full py-2.5 pl-12 pr-4 border border-gray-700 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 focus:outline-none transition-all duration-300 placeholder-gray-500"
                                 value={query}
                                 onChange={(e) => setQuery(e.target.value)}
-                                onKeyPress={(e) => {
-                                    if (e.key === 'Enter') {
-                                        e.preventDefault();
-                                        handleSubmit(e);
-                                    }
-                                }}
                             />
                             <button
                                 type="submit"
-                                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-red-500 hover:bg-red-600 text-white rounded-full p-1 transition-colors duration-200"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    handleSubmit(e);
-                                }}
+                                className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 group-focus-within:text-orange-500 transition-colors"
                             >
-                                <svg
-                                    className="w-4 h-4"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z"
-                                    />
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                                 </svg>
                             </button>
-                            <svg
-                                className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-red-500"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z"
-                                />
-                            </svg>
-                        </div>
-                    </form>
-                    <div className="w-full flex flex-row gap-3 justify-center items-center mt-2 flex-wrap
-                                    sm:w-auto sm:mt-0 sm:gap-4"> {/* Adjusted gap for better alignment */}
+                        </form>
+                    </div>
+
+                    {/* Actions */}
+                    <div className="flex items-center gap-4">
                         {!loading && (
                             <>
                                 {user ? (
-                                    <div className="flex items-center gap-3">
-                                        <Link to={`/user/${user._id}`} title="Profile">
-                                            <CgProfile className="text-white text-3xl rounded-full hover:text-yellow-400 transition duration-200 cursor-pointer" />
+                                    <div className="flex items-center gap-4">
+                                        <Link to={`/user/${user._id}`} className="flex items-center gap-2 text-gray-300 hover:text-white transition-colors">
+                                            <CgProfile className="w-8 h-8" />
+                                            <span className="hidden sm:block font-medium">{user.name}</span>
                                         </Link>
-                                        <span className="text-white text-sm font-medium">
-                                            Welcome, {user.name}!
-                                        </span>
+                                        <CartButton showCart={showCart} setShowCart={setShowCart} size="small" />
                                         <Link
                                             to="/logout"
-                                            className="px-4 py-2 bg-red-600 text-white rounded-lg shadow hover:bg-red-700 font-semibold text-center transition-all duration-300"
+                                            className="px-4 py-2 text-sm font-medium text-red-400 hover:text-red-300 hover:bg-red-400/10 rounded-full transition-colors"
                                         >
                                             Logout
                                         </Link>
-                                        {/* CartButton moved here */}
-                                        <CartButton showCart={showCart} setShowCart={setShowCart} size="small" />
                                     </div>
                                 ) : (
-                                    <>
+                                    <div className="flex items-center gap-3">
                                         <Link
                                             to="/login"
-                                            className="px-4 py-2 bg-red-500 text-white rounded-lg shadow hover:bg-red-600 font-semibold text-center transition-all duration-300"
+                                            className="px-5 py-2 text-sm font-medium text-gray-300 hover:text-white transition-colors"
                                         >
                                             Login
                                         </Link>
                                         <Link
                                             to="/signin"
-                                            className="px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 font-semibold text-center transition-all duration-300"
+                                            className="px-5 py-2 text-sm font-medium bg-gradient-to-r from-orange-500 to-red-600 text-white rounded-full shadow-lg hover:shadow-orange-500/25 hover:scale-105 transition-all duration-300"
                                         >
                                             Sign Up
                                         </Link>
-                                        {/* CartButton for non-logged-in users, if desired */}
                                         <CartButton showCart={showCart} setShowCart={setShowCart} size="small" />
-                                    </>
+                                    </div>
                                 )}
                             </>
                         )}
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 

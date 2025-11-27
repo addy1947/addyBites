@@ -1,5 +1,6 @@
 import React from 'react'
 import First from './pages/First'
+import LandingPage from './pages/LandingPage'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Second from './pages/Second'
 import Login from './components/Login'
@@ -16,6 +17,10 @@ const App = () => {
     const router = createBrowserRouter([
         {
             path: '/',
+            element: <LandingPage />,
+        },
+        {
+            path: '/menu',
             element: <First />,
         },
         {

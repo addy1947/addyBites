@@ -90,7 +90,7 @@ const Login = () => {
                 >
                     {/* Overlay for better text readability */}
                     <div className="absolute inset-0 bg-black/20"></div>
-                    
+
                     {/* Floating elements for modern look */}
                     <div className="absolute top-20 left-10 w-20 h-20 bg-white/10 rounded-full blur-xl animate-pulse"></div>
                     <div className="absolute bottom-20 right-10 w-32 h-32 bg-white/5 rounded-full blur-2xl animate-pulse delay-1000"></div>
@@ -98,11 +98,11 @@ const Login = () => {
 
                     <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-10 pt-6 sm:pt-10 relative z-10">
                         <div className="flex justify-center">
-                            <div className="bg-[#4b3621]/95 backdrop-blur-sm text-white rounded-2xl p-4 sm:p-6 md:p-8 lg:p-10 shadow-2xl w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl border border-white/10">
+                            <div className="bg-gray-900/90 backdrop-blur-md text-white rounded-2xl p-4 sm:p-6 md:p-8 lg:p-10 shadow-2xl w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl border border-gray-700">
                                 {/* Back Arrow */}
                                 <button
                                     onClick={() => window.history.back()}
-                                    className="absolute -top-4 -left-4 bg-white text-[#4b3621] shadow-lg rounded-full p-3 hover:bg-gray-100 transition-all duration-300 hover:scale-110"
+                                    className="absolute -top-4 -left-4 bg-white text-gray-900 shadow-lg rounded-full p-3 hover:bg-gray-100 transition-all duration-300 hover:scale-110"
                                     title="Go Back"
                                 >
                                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -129,7 +129,7 @@ const Login = () => {
                                 {/* Toggle Buttons */}
                                 <div className="flex gap-1 sm:gap-2 mb-6 sm:mb-8 bg-white/10 rounded-xl p-1">
                                     <button
-                                        className="flex-1 py-2 sm:py-3 px-3 sm:px-4 rounded-lg bg-white text-[#4b3621] font-semibold text-sm sm:text-base transition-all duration-300 transform hover:scale-105 shadow-lg"
+                                        className="flex-1 py-2 sm:py-3 px-3 sm:px-4 rounded-lg bg-white text-gray-900 font-semibold text-sm sm:text-base transition-all duration-300 transform hover:scale-105 shadow-lg"
                                     >
                                         Login
                                     </button>
@@ -148,7 +148,7 @@ const Login = () => {
                                             Email Address
                                         </label>
                                         <div className="relative group">
-                                            <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 group-focus-within:text-[#4b3621] transition-colors">
+                                            <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 group-focus-within:text-gray-900 transition-colors">
                                                 <FaEnvelope size={14} className="sm:w-4 sm:h-4" />
                                             </div>
                                             <input
@@ -156,7 +156,7 @@ const Login = () => {
                                                 placeholder="Enter your email"
                                                 value={email}
                                                 onChange={handleEmailChange}
-                                                className={`w-full pl-9 sm:pl-10 pr-3 sm:pr-4 py-3 sm:py-4 bg-white/90 backdrop-blur-sm border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-white/50 focus:bg-white transition-all duration-300 text-[#4b3621] placeholder-gray-400 text-sm sm:text-base ${submitted && emailError ? 'border-red-400 focus:ring-red-300' : 'border-white/20 focus:border-white/50'
+                                                className={`w-full pl-9 sm:pl-10 pr-3 sm:pr-4 py-3 sm:py-4 bg-white/90 backdrop-blur-sm border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-white/50 focus:bg-white transition-all duration-300 text-gray-900 placeholder-gray-400 text-sm sm:text-base ${submitted && emailError ? 'border-red-400 focus:ring-red-300' : 'border-white/20 focus:border-white/50'
                                                     }`}
                                             />
                                         </div>
@@ -176,7 +176,7 @@ const Login = () => {
                                             Password
                                         </label>
                                         <div className="relative group">
-                                            <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 group-focus-within:text-[#4b3621] transition-colors">
+                                            <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 group-focus-within:text-gray-900 transition-colors">
                                                 <FaLock size={14} className="sm:w-4 sm:h-4" />
                                             </div>
                                             <input
@@ -184,7 +184,7 @@ const Login = () => {
                                                 placeholder="Enter your password"
                                                 value={password}
                                                 onChange={handlePasswordChange}
-                                                className={`w-full pl-9 sm:pl-10 pr-3 sm:pr-4 py-3 sm:py-4 bg-white/90 backdrop-blur-sm border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-white/50 focus:bg-white transition-all duration-300 text-[#4b3621] placeholder-gray-400 text-sm sm:text-base ${submitted && passwordError ? 'border-red-400 focus:ring-red-300' : 'border-white/20 focus:border-white/50'
+                                                className={`w-full pl-9 sm:pl-10 pr-3 sm:pr-4 py-3 sm:py-4 bg-white/90 backdrop-blur-sm border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-white/50 focus:bg-white transition-all duration-300 text-gray-900 placeholder-gray-400 text-sm sm:text-base ${submitted && passwordError ? 'border-red-400 focus:ring-red-300' : 'border-white/20 focus:border-white/50'
                                                     }`}
                                             />
                                         </div>
@@ -209,7 +209,7 @@ const Login = () => {
                                     <button
                                         type="submit"
                                         disabled={isLoading}
-                                        className="w-full bg-gradient-to-r from-white to-gray-100 text-[#4b3621] py-3 sm:py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 group text-sm sm:text-base"
+                                        className="w-full bg-gradient-to-r from-orange-500 to-red-600 text-white py-3 sm:py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 group text-sm sm:text-base"
                                     >
                                         {isLoading ? (
                                             <>
@@ -232,9 +232,9 @@ const Login = () => {
                                     {/* Additional Info */}
                                     <div className="text-center pt-3 sm:pt-4">
                                         <p className="text-xs text-gray-300 px-2">
-                                            By signing in, you agree to our 
-                                            <a href="#" className="text-white hover:underline ml-1">Terms of Service</a> 
-                                            and 
+                                            By signing in, you agree to our
+                                            <a href="#" className="text-white hover:underline ml-1">Terms of Service</a>
+                                            and
                                             <a href="#" className="text-white hover:underline ml-1">Privacy Policy</a>
                                         </p>
                                     </div>
