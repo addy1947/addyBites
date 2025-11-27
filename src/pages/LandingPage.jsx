@@ -5,6 +5,7 @@ import { FaHamburger, FaMotorcycle, FaUtensils } from 'react-icons/fa';
 
 const LandingPage = () => {
     const [currentImage, setCurrentImage] = useState(0);
+    const [wordIndex, setWordIndex] = useState(0);
 
     const images = [
         "/image/hero.png",
@@ -13,11 +14,20 @@ const LandingPage = () => {
         "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=1920&q=80"  // Burger
     ];
 
+    const words = ["Magic", "Flavor", "Passion"];
+
     useEffect(() => {
         const timer = setInterval(() => {
             setCurrentImage((prev) => (prev + 1) % images.length);
         }, 5000);
         return () => clearInterval(timer);
+    }, []);
+
+    useEffect(() => {
+        const wordTimer = setInterval(() => {
+            setWordIndex((prev) => (prev + 1) % words.length);
+        }, 3000);
+        return () => clearInterval(wordTimer);
     }, []);
 
     return (
@@ -62,7 +72,23 @@ const LandingPage = () => {
                         transition={{ duration: 0.8 }}
                         className="text-5xl md:text-7xl font-extrabold mb-6 leading-tight drop-shadow-2xl"
                     >
-                        Taste the <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-600">Magic</span> in Every Bite
+                        Taste the{' '}
+                        <span className="inline-block relative min-w-[180px] text-left align-top">
+                            <AnimatePresence mode='wait'>
+                                <motion.span
+                                    key={words[wordIndex]}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -20 }}
+                                    transition={{ duration: 0.5 }}
+                                    className="absolute left-0 text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-600"
+                                >
+                                    {words[wordIndex]}
+                                </motion.span>
+                            </AnimatePresence>
+                            <span className="invisible">Magic</span> {/* Spacer to keep width */}
+                        </span>{' '}
+                        in Every Bite
                     </motion.h1>
                     <motion.p
                         initial={{ opacity: 0, y: 30 }}
