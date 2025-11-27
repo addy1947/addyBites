@@ -1,17 +1,17 @@
 import React from 'react'
-import First from './pages/First'
-import LandingPage from './pages/LandingPage'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import LandingPage from './pages/LandingPage'
+import First from './pages/First'
 import Second from './pages/Second'
+import About from './pages/About'
 import Login from './components/Login'
 import SignIn from './components/SignIn'
 import Logout from './components/Logout'
-import { AuthProvider } from './context/AuthContext'
 import Profile from './pages/Profile'
-import ProtectedRoute from './components/ProtectedRoute'
 import Checkout from './pages/Checkout'
 import NewAddress from './pages/NewAddress'
-
+import ProtectedRoute from './components/ProtectedRoute'
+import { AuthProvider } from './context/AuthContext'
 
 const App = () => {
     const router = createBrowserRouter([
@@ -22,6 +22,10 @@ const App = () => {
         {
             path: '/menu',
             element: <First />,
+        },
+        {
+            path: '/about',
+            element: <About />,
         },
         {
             path: 'details/:_id',
