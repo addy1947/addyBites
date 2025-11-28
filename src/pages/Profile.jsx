@@ -70,16 +70,18 @@ const Profile = () => {
             <div className="flex flex-col md:flex-row min-h-[calc(100vh-80px)] relative max-w-7xl mx-auto">
                 {/* Sidebar */}
                 <div
-                    className={`fixed z-40 md:static md:translate-x-0 top-0 left-0 w-[80%] max-w-xs md:w-[280px] bg-gray-800 md:bg-transparent md:border-r border-gray-800 h-full md:h-auto overflow-y-auto transition-transform duration-300 ease-in-out
+                    className={`fixed z-40 md:static md:translate-x-0 top-0 left-0 w-[80%] max-w-xs md:w-[280px] bg-gray-800/80 backdrop-blur-xl md:bg-transparent md:border-r border-gray-800 h-full md:h-auto overflow-y-auto transition-transform duration-300 ease-in-out
                     ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
                 >
-                    <div className="px-4 py-6 md:pr-6">
-                        <h2 className="text-2xl font-bold mb-2 bg-gradient-to-r from-orange-500 to-red-600 text-transparent bg-clip-text hidden md:block">
-                            Dashboard
-                        </h2>
-                        <p className="text-gray-500 text-sm mb-6 hidden md:block">Manage your account</p>
+                    <div className="px-4 py-8 md:pr-6">
+                        <div className="mb-8 px-2">
+                            <h2 className="text-3xl font-bold bg-gradient-to-r from-orange-400 to-red-600 text-transparent bg-clip-text hidden md:block">
+                                Dashboard
+                            </h2>
+                            <p className="text-gray-400 text-sm mt-1 hidden md:block">Welcome back, {detail?.name || 'User'}</p>
+                        </div>
 
-                        <div className="space-y-2">
+                        <div className="space-y-3">
                             {navItems.map((item) => (
                                 <div
                                     key={item.key}
@@ -87,16 +89,16 @@ const Profile = () => {
                                         setNav(item.key);
                                         setSidebarOpen(false);
                                     }}
-                                    className={`flex items-center gap-4 px-4 py-3 rounded-xl cursor-pointer transition-all duration-200 border border-transparent group
+                                    className={`flex items-center gap-4 px-4 py-3.5 rounded-2xl cursor-pointer transition-all duration-300 border border-transparent group
                                     ${nav === item.key
-                                            ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/20'
-                                            : 'text-gray-400 hover:bg-gray-800 hover:text-white'
+                                            ? 'bg-gradient-to-r from-orange-500/20 to-red-500/20 text-orange-500 border-orange-500/30 shadow-lg shadow-orange-500/10'
+                                            : 'text-gray-400 hover:bg-gray-800 hover:text-gray-200'
                                         }`}
                                 >
-                                    <div className={`p-1 rounded-lg transition-colors ${nav === item.key ? 'bg-white/20' : 'group-hover:bg-gray-700'}`}>
+                                    <div className={`p-2 rounded-xl transition-colors ${nav === item.key ? 'bg-orange-500 text-white' : 'bg-gray-800 group-hover:bg-gray-700 text-gray-400 group-hover:text-white'}`}>
                                         {item.icon}
                                     </div>
-                                    <span className="font-medium text-sm">{item.label}</span>
+                                    <span className="font-medium text-base">{item.label}</span>
                                 </div>
                             ))}
                         </div>
@@ -105,7 +107,7 @@ const Profile = () => {
 
                 {/* Main content */}
                 <div className="flex-1 p-4 md:p-6">
-                    <div className="bg-gray-800/50 backdrop-blur-sm rounded-3xl border border-gray-700/50 min-h-[500px] transition duration-300 overflow-hidden">
+                    <div className="bg-gray-800/30 backdrop-blur-md rounded-[2rem] border border-gray-700/50 min-h-[600px] transition duration-300 overflow-hidden shadow-2xl p-6 md:p-8">
                         {nav === "accounts" ? (
                             <Account a={detail} />
                         ) : nav === "order" ? (

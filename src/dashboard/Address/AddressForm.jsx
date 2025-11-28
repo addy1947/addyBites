@@ -18,14 +18,20 @@ const AddressForm = ({ onSave }) => {
         pincode: ''
     });
 
-    const [message, setMessage] = useState("");
+    const [errors, setErrors] = useState({});
 
-    const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+    const validate = () => {
+        const newErrors = {};
+        if (!/^\d{6}$/.test(formData.pincode)) {
+            newErrors.pincode = "Pincode must be exactly 6 digits.";
+        }
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!validate()) return;
         await handleSave(formData);
     };
 
@@ -62,42 +68,46 @@ const AddressForm = ({ onSave }) => {
     return (
         <form
             onSubmit={handleSubmit}
-            className="bg-white p-4 sm:p-6 rounded-xl shadow-md w-full max-w-md mx-auto mt-4 sm:mt-8"
+            className="bg-gray-800/50 backdrop-blur-xl border border-gray-700 p-6 sm:p-8 rounded-3xl shadow-2xl w-full max-w-lg mx-auto mt-8"
         >
-            <h2 className="text-xl sm:text-2xl font-semibold mb-4 text-center text-gray-800">Add Address</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-center bg-gradient-to-r from-orange-400 to-red-600 bg-clip-text text-transparent">Add New Address</h2>
 
             {message && (
-                <div className={`mb-3 p-3 rounded text-sm ${message.includes('success') ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                <div className={`mb-6 p-4 rounded-xl text-sm font-medium flex items-center gap-2 ${message.includes('success') ? 'bg-green-500/10 text-green-400 border border-green-500/20' : 'bg-red-500/10 text-red-400 border border-red-500/20'}`}>
                     {message}
                 </div>
             )}
 
-            {[
-                { label: 'Name', name: 'name' },
-                { label: 'Building Number', name: 'buildingNumber' },
-                { label: 'Landmark', name: 'landmark', required: false },
-                { label: 'City', name: 'city' },
-                { label: 'District', name: 'district' },
-                { label: 'State', name: 'state' },
-                { label: 'Pincode', name: 'pincode' },
-            ].map(({ label, name, required = true }) => (
-                <div className="mb-3" key={name}>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
-                    <input
-                        type="text"
-                        name={name}
-                        value={formData[name]}
-                        onChange={handleChange}
-                        className="w-full border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm"
-                        required={required}
-                    />
-                </div>
-            ))}
+            <div className="space-y-4">
+                {[
+                    { label: 'Full Name', name: 'name', placeholder: 'John Doe' },
+                    { label: 'Building / Flat No.', name: 'buildingNumber', placeholder: 'Flat 101, Galaxy Apts' },
+                    { label: 'Landmark', name: 'landmark', required: false, placeholder: 'Near City Mall' },
+                    { label: 'City', name: 'city', placeholder: 'Mumbai' },
+                    { label: 'District', name: 'district', placeholder: 'Mumbai Suburban' },
+                    { label: 'State', name: 'state', placeholder: 'Maharashtra' },
+                    { label: 'Pincode', name: 'pincode', placeholder: '400001', type: 'number' },
+                ].map(({ label, name, required = true, placeholder, type = 'text' }) => (
+                    <div key={name}>
+                        <label className="block text-sm font-medium text-gray-300 mb-1.5 ml-1">{label} {required && <span className="text-red-500">*</span>}</label>
+                        <input
+                            type={type}
+                            name={name}
+                            value={formData[name]}
+                            onChange={handleChange}
+                            placeholder={placeholder}
+                            className={`w-full bg-gray-900/50 border ${errors[name] ? 'border-red-500/50 focus:border-red-500' : 'border-gray-700 focus:border-orange-500'} text-gray-100 px-4 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500/20 transition-all duration-300 placeholder-gray-600`}
+                            required={required}
+                        />
+                        {errors[name] && <p className="text-red-400 text-xs mt-1 ml-1">{errors[name]}</p>}
+                    </div>
+                ))}
+            </div>
 
-            <div className="flex flex-col sm:flex-row gap-2 mt-4">
+            <div className="flex flex-col sm:flex-row gap-4 mt-8">
                 <button
                     type="submit"
-                    className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm transition"
+                    className="flex-1 bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white px-6 py-3.5 rounded-xl font-semibold shadow-lg shadow-orange-500/20 hover:shadow-orange-500/40 hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                     disabled={
                         !formData.name ||
                         !formData.buildingNumber ||
@@ -107,7 +117,7 @@ const AddressForm = ({ onSave }) => {
                         !formData.pincode
                     }
                 >
-                    Save
+                    Save Address
                 </button>
                 <button
                     type="button"
@@ -120,9 +130,9 @@ const AddressForm = ({ onSave }) => {
                         state: '',
                         pincode: '',
                     })}
-                    className="bg-gray-300 hover:bg-gray-400 text-black px-4 py-2 rounded-md text-sm transition"
+                    className="flex-1 bg-gray-700 hover:bg-gray-600 text-gray-200 px-6 py-3.5 rounded-xl font-semibold transition-all duration-300 hover:bg-gray-600"
                 >
-                    Clear
+                    Clear Form
                 </button>
             </div>
         </form>
