@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaHamburger, FaMotorcycle, FaUtensils } from 'react-icons/fa';
+import { FaHamburger, FaMotorcycle, FaUtensils, FaBars, FaTimes } from 'react-icons/fa';
 
 const LandingPage = () => {
     const [currentImage, setCurrentImage] = useState(0);
     const [wordIndex, setWordIndex] = useState(0);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const images = [
         "/image/hero.png",
@@ -33,17 +34,51 @@ const LandingPage = () => {
     return (
         <div className="min-h-screen bg-gray-900 text-white font-sans">
             {/* Navbar */}
-            <nav className="absolute top-0 left-0 w-full z-20 flex justify-between items-center px-8 py-6 bg-gradient-to-b from-black/80 to-transparent">
-                <h1 className="text-3xl font-bold text-orange-500 tracking-wider">AddyBites</h1>
-                <div className="space-x-6 hidden md:block">
-                    <Link to="/" className="hover:text-orange-400 transition font-medium">Home</Link>
-                    <Link to="/menu" className="hover:text-orange-400 transition font-medium">Menu</Link>
-                    <Link to="/about" className="hover:text-orange-400 transition font-medium">About</Link>
+            {/* Navbar */}
+            <nav className="absolute top-0 left-0 w-full z-50 px-6 py-6">
+                <div className="flex justify-between items-center max-w-7xl mx-auto">
+                    <h1 className="text-3xl font-bold text-orange-500 tracking-wider z-50 relative">AddyBites</h1>
+
+                    {/* Desktop Menu */}
+                    <div className="hidden md:flex space-x-8 items-center bg-black/30 backdrop-blur-md px-8 py-3 rounded-full border border-white/10">
+                        <Link to="/" className="hover:text-orange-400 transition font-medium text-sm uppercase tracking-wide">Home</Link>
+                        <Link to="/menu" className="hover:text-orange-400 transition font-medium text-sm uppercase tracking-wide">Menu</Link>
+                        <Link to="/about" className="hover:text-orange-400 transition font-medium text-sm uppercase tracking-wide">About</Link>
+                    </div>
+
+                    {/* Desktop Actions */}
+                    <div className="hidden md:flex space-x-4">
+                        <Link to="/login" className="px-6 py-2 rounded-full border border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white transition font-medium">Login</Link>
+                        <Link to="/signin" className="px-6 py-2 rounded-full bg-orange-500 text-white hover:bg-orange-600 transition font-medium shadow-lg hover:shadow-orange-500/30">Sign Up</Link>
+                    </div>
+
+                    {/* Mobile Menu Toggle */}
+                    <button
+                        className="md:hidden text-2xl text-white z-50 relative focus:outline-none"
+                        onClick={() => setIsMenuOpen(!isMenuOpen)}
+                    >
+                        {isMenuOpen ? <FaTimes /> : <FaBars />}
+                    </button>
                 </div>
-                <div className="space-x-4">
-                    <Link to="/login" className="px-5 py-2 rounded-full border border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white transition font-medium">Login</Link>
-                    <Link to="/signin" className="px-5 py-2 rounded-full bg-orange-500 text-white hover:bg-orange-600 transition font-medium shadow-lg hover:shadow-orange-500/30">Sign Up</Link>
-                </div>
+
+                {/* Mobile Menu Overlay */}
+                <AnimatePresence>
+                    {isMenuOpen && (
+                        <motion.div
+                            initial={{ opacity: 0, y: -20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -20 }}
+                            className="absolute top-0 left-0 w-full bg-gray-900/95 backdrop-blur-xl border-b border-gray-800 p-6 pt-24 flex flex-col space-y-6 md:hidden shadow-2xl"
+                        >
+                            <Link to="/" className="text-xl font-medium hover:text-orange-500 transition" onClick={() => setIsMenuOpen(false)}>Home</Link>
+                            <Link to="/menu" className="text-xl font-medium hover:text-orange-500 transition" onClick={() => setIsMenuOpen(false)}>Menu</Link>
+                            <Link to="/about" className="text-xl font-medium hover:text-orange-500 transition" onClick={() => setIsMenuOpen(false)}>About</Link>
+                            <div className="h-px bg-gray-800 w-full my-4"></div>
+                            <Link to="/login" className="text-center w-full py-3 rounded-xl border border-orange-500 text-orange-500 font-medium" onClick={() => setIsMenuOpen(false)}>Login</Link>
+                            <Link to="/signin" className="text-center w-full py-3 rounded-xl bg-orange-500 text-white font-medium shadow-lg" onClick={() => setIsMenuOpen(false)}>Sign Up</Link>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
             </nav>
 
             {/* Hero Section */}
@@ -70,10 +105,10 @@ const LandingPage = () => {
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
-                        className="text-5xl md:text-7xl font-extrabold mb-6 leading-tight drop-shadow-2xl"
+                        className="text-4xl md:text-7xl font-extrabold mb-6 leading-tight drop-shadow-2xl flex flex-col items-center gap-2"
                     >
-                        Taste the{' '}
-                        <span className="inline-block relative min-w-[180px] text-left align-top">
+                        <span>Taste the</span>
+                        <span className="inline-block relative min-w-[200px] text-center">
                             <AnimatePresence mode='wait'>
                                 <motion.span
                                     key={words[wordIndex]}
@@ -81,14 +116,14 @@ const LandingPage = () => {
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: -20 }}
                                     transition={{ duration: 0.5 }}
-                                    className="absolute left-0 text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-600"
+                                    className="absolute left-0 w-full text-center text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-600"
                                 >
                                     {words[wordIndex]}
                                 </motion.span>
                             </AnimatePresence>
-                            <span className="invisible">Magic</span> {/* Spacer to keep width */}
-                        </span>{' '}
-                        in Every Bite
+                            <span className="invisible">Passion</span> {/* Spacer for width */}
+                        </span>
+                        <span>in Every Bite</span>
                     </motion.h1>
                     <motion.p
                         initial={{ opacity: 0, y: 30 }}
