@@ -18,6 +18,7 @@ const AddressForm = ({ onSave }) => {
         pincode: ''
     });
 
+    const [message, setMessage] = useState("");
     const [errors, setErrors] = useState({});
 
     const validate = () => {

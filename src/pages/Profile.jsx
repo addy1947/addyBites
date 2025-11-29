@@ -70,11 +70,11 @@ const Profile = () => {
             <div className="flex flex-col md:flex-row min-h-[calc(100vh-80px)] relative max-w-7xl mx-auto">
                 {/* Sidebar */}
                 <div
-                    className={`fixed z-40 md:static md:translate-x-0 top-0 left-0 w-[80%] max-w-xs md:w-[280px] bg-gray-800/80 backdrop-blur-xl md:bg-transparent md:border-r border-gray-800 h-full md:h-auto overflow-y-auto transition-transform duration-300 ease-in-out
+                    className={`fixed z-40 md:sticky md:top-24 left-0 w-[80%] max-w-xs md:w-[280px] bg-gray-800/80 backdrop-blur-xl md:bg-transparent md:border-r border-gray-800 h-full md:h-[calc(100vh-120px)] overflow-y-auto transition-transform duration-300 ease-in-out
                     ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
                 >
-                    <div className="px-4 py-8 md:pr-6">
-                        <div className="mb-8 px-2">
+                    <div className="px-4 py-2 md:pr-6">
+                        <div className="mb-6 px-4">
                             <h2 className="text-3xl font-bold bg-gradient-to-r from-orange-400 to-red-600 text-transparent bg-clip-text hidden md:block">
                                 Dashboard
                             </h2>
