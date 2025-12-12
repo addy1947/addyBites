@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bunGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFD700" />
+      <stop offset="100%" stop-color="#FFA500" />
+    </linearGradient>
+    <linearGradient id="meatGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#D9480F" />
+      <stop offset="100%" stop-color="#A61E4D" />
+    </linearGradient>
+    <linearGradient id="lettuceGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#69DB7C" />
+      <stop offset="100%" stop-color="#2F9E44" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Top Bun -->
+  <path fill="url(#bunGradient)" d="M128,224 C128,135.6 185.3,64 256,64 C326.7,64 384,135.6 384,224 L128,224 Z"/>
+  
+  <!-- Lettuce -->
+  <path fill="url(#lettuceGradient)" d="M118,234 C128,224 148,224 158,234 C168,244 188,244 198,234 C208,224 228,224 238,234 C248,244 268,244 278,234 C288,224 308,224 318,234 C328,244 348,244 358,234 C368,224 388,224 394,234 L394,254 L118,254 Z"/>
+  
+  <!-- Meat -->
+  <rect x="128" y="264" width="256" height="40" rx="10" fill="url(#meatGradient)" />
+  
+  <!-- Bottom Bun -->
+  <path fill="url(#bunGradient)" d="M128,314 L384,314 C384,367 326.7,410 256,410 C185.3,410 128,367 128,314 Z"/>
+  
+  <!-- Cheese/Drip (Optional decorative detail) -->
+  <path fill="#FFEC99" d="M140,264 L372,264 L372,274 Q360,284 348,274 L330,274 Q318,284 306,274 L140,274 Z" opacity="0.8"/>
+
+  <!-- Seeds on top bun -->
+  <circle cx="200" cy="150" r="5" fill="#FDF2E9" opacity="0.7"/>
+  <circle cx="260" cy="120" r="5" fill="#FDF2E9" opacity="0.7"/>
+  <circle cx="310" cy="160" r="5" fill="#FDF2E9" opacity="0.7"/>
+  <circle cx="240" cy="180" r="5" fill="#FDF2E9" opacity="0.7"/>
+
+  <!-- Bite Mark (Overlay to cut out) -->
+  <path fill="white" d="M420,100 A60,60 0 0,0 360,160 A60,60 0 0,0 420,220 Z" visibility="hidden"/> 
+  <!-- Actually, doing a visual bite is clearer by modifying paths, but masking is cleaner. 
+       Let's stick to a full delicious burger for now as "Bites" implies we want to bite it, 
+       or let's add a stylistic bite. 
+       
+       Simulating a bite by drawing a white circle over the right side.
+       Assuming white background. If dark mode, this might fail.
+       It's safer to not fake a bite with color if we don't know the background.
+       I will produce a complete, tasty burger. The name ADDY BITES is enough.
+  -->
+</svg>

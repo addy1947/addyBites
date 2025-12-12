@@ -2,13 +2,12 @@ import React, { useEffect, useState } from 'react';
 import Head from '../components/Head';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
-import { FaShoppingCart, FaCreditCard } from 'react-icons/fa';
+import { FaShoppingCart, FaCreditCard, FaMapMarkerAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 const RENDER_WEBSITE_LINK = import.meta.env.VITE_RENDER_WEBSITE_LINK;
-
-
 
 const Checkout = () => {
     const { user } = useAuth();
@@ -19,8 +18,6 @@ const Checkout = () => {
     const [selectedAddress, setSelectedAddress] = useState(null);
     const [showAddress, setShowAddress] = useState(true);
     const navigate = useNavigate();
-
-
 
     const handleOrder = async () => {
         if (!selectedAddress) {
@@ -33,17 +30,15 @@ const Checkout = () => {
             await axios.post(
                 `${RENDER_WEBSITE_LINK}/user/${_id}/cart/order`,
                 { addressId: selectedAddress, paidAmount: toPay },
-
                 { withCredentials: true }
             );
             navigate('/')
-            
+
         } catch (error) {
             alert("Failed to place order.");
             console.error(error);
         }
     };
-
 
     const fetchAddress = async () => {
         try {
@@ -77,220 +72,189 @@ const Checkout = () => {
 
     if (isLoading) {
         return (
-            <>
-                <div className='sticky top-0 z-50 bg-white shadow-md'>
-                    <Head />
+            <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+                <div className="flex flex-col items-center gap-4">
+                    <div className="w-16 h-16 border-4 border-orange-500/30 border-t-orange-500 rounded-full animate-spin"></div>
+                    <p className="text-gray-400 font-medium text-lg">Loading your cart...</p>
                 </div>
-                <div
-                    className="min-h-screen flex items-center justify-center"
-                    style={{
-                        backgroundImage: "url('/image/bg.png')",
-                        backgroundSize: "cover",
-                        backgroundPosition: "center",
-                    }}
-                >
-                    <div className="bg-[#4b3621]/95 backdrop-blur-sm text-white rounded-2xl p-8 shadow-2xl flex flex-col items-center gap-4">
-                        <div className="relative">
-                            <div className="w-16 h-16 border-4 border-white/20 rounded-full"></div>
-                            <div className="absolute top-0 left-0 w-16 h-16 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
-                        </div>
-                        <p className="text-white font-semibold text-lg">Loading your cart...</p>
-                    </div>
-                </div>
-            </>
+            </div>
         );
     }
 
     return (
-        <>
-            {/* Header - Sticky only for tablets/desktops */}
-            <div className="bg-white shadow-md md:sticky md:top-0 md:z-50">
+        <div className="min-h-screen bg-gray-900 text-white font-sans selection:bg-orange-500/30">
+            {/* Header - Sticky */}
+            <div className="sticky top-0 z-50 bg-gray-900/80 backdrop-blur-md border-b border-gray-800">
                 <Head />
             </div>
 
-            {/* Main scrollable section with smooth behavior */}
-            <div className="mt-4 scroll-smooth">
-                <div
-                    className="min-h-screen py-8 sm:py-10"
-                    style={{
-                        backgroundImage: "url('/image/bg.png')",
-                        backgroundSize: "cover",
-                        backgroundPosition: "center",
-                    }}
-                >
-                    <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-10 pt-6 sm:pt-10">
-                        <div className="text-center mb-8">
-                            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-2 bg-gradient-to-r from-white to-gray-200 bg-clip-text text-transparent">
-                                Your Cart
-                            </h2>
-                            <p className="text-gray-200 text-sm">
-                                Review your items and proceed to checkout
-                            </p>
-                        </div>
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+                <div className="text-center mb-10">
+                    <h2 className="text-3xl sm:text-5xl font-extrabold mb-4 bg-gradient-to-r from-orange-400 to-red-600 bg-clip-text text-transparent">
+                        Checkout
+                    </h2>
+                    <p className="text-gray-400 text-lg">
+                        Review your order and complete your purchase
+                    </p>
+                </div>
 
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-                            {/* Payment Summary - Top Left */}
-                            <div className="bg-gradient-to-br from-[#4b3621] to-[#6b4c2a] backdrop-blur-sm text-white rounded-xl p-6 shadow-lg">
-                                <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
-                                    <FaCreditCard className="text-white" />
-                                    Payment Summary
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    {/* Left Column: Address & Payment (Span 2) */}
+                    <div className="lg:col-span-2 space-y-8">
+
+                        {/* Address Section */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="bg-gray-800/50 backdrop-blur-sm rounded-3xl p-6 sm:p-8 border border-gray-700 shadow-xl"
+                        >
+                            <div className="flex items-center justify-between mb-6">
+                                <h3 className="text-2xl font-bold flex items-center gap-3 text-white">
+                                    <FaMapMarkerAlt className="text-orange-500" />
+                                    Delivery Address
                                 </h3>
-                                <div className="space-y-3 text-sm">
-                                    <div className="flex justify-between">
-                                        <span className="text-orange-200">Subtotal</span>
-                                        <span>₹{total.toFixed(2)}</span>
-                                    </div>
-                                    <div className="flex justify-between">
-                                        <span className="text-orange-200">Delivery</span>
-                                        <span>₹{deliveryCharge}</span>
-                                    </div>
-                                    <div className="flex justify-between">
-                                        <span className="text-orange-200">Discount</span>
-                                        <span>- ₹{discount}</span>
-                                    </div>
-                                    <div className="flex justify-between">
-                                        <span className="text-orange-200">Tax (5%)</span>
-                                        <span>₹{tax.toFixed(2)}</span>
-                                    </div>
-                                    <hr className="my-3 border-orange-200/30" />
-                                    <div className="flex justify-between text-lg font-bold">
-                                        <span>Total</span>
-                                        <span>₹{toPay}</span>
-                                    </div>
-                                    <button
-                                        disabled={cart.length === 0}
-                                        className={`w-full mt-4 bg-gradient-to-r from-orange-400 to-orange-500 text-white font-semibold py-3 rounded-xl transition-all duration-300 hover:scale-105 ${
-                                            cart.length === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:from-orange-500 hover:to-orange-600'
-                                        }`}
-                                        onClick={handleOrder}
+                                <div className="flex gap-4 text-sm">
+                                    <Link
+                                        to={`/user/${_id}/saveaddress`}
+                                        className="text-orange-500 hover:text-orange-400 font-medium transition"
                                     >
-                                        Proceed to Pay ₹{toPay}
-                                    </button>
+                                        + Add New
+                                    </Link>
                                 </div>
                             </div>
 
-                            {/* Address Section - Top Right */}
-                            <div className="bg-gradient-to-br from-[#4b3621] to-[#6b4c2a] backdrop-blur-sm text-white rounded-xl p-6 shadow-lg">
-                                <div className="flex items-center justify-between mb-4">
-                                    <h3 className="text-xl font-semibold flex items-center gap-2">
-                                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                                        </svg>
-                                        Delivery Address
-                                    </h3>
-                                    <div className="flex gap-2">
-                                        <Link 
-                                            to={`/user/${_id}/saveaddress`}
-                                            className="text-orange-200 hover:text-white text-sm underline"
-                                        >
-                                            Add New
-                                        </Link>
-                                        <button
-                                            onClick={() => setShowAddress(!showAddress)}
-                                            className="text-orange-200 hover:text-white text-sm underline"
-                                        >
-                                            {showAddress ? 'Hide' : 'Show'}
-                                        </button>
-                                    </div>
-                                </div>
-
-                                {showAddress && (
-                                    address.length === 0 ? (
-                                        <p className="text-orange-200 text-center py-4">No address found.</p>
-                                    ) : (
-                                        <div className="space-y-4">
-                                            {address.map((item, index) => (
-                                                <div
-                                                    key={index}
-                                                    className={`rounded-lg p-4 border-2 transition-all duration-200 ${
-                                                        selectedAddress === item._id
-                                                            ? 'border-orange-300 shadow-lg bg-orange-500/20'
-                                                            : 'border-orange-200/30 hover:border-orange-300/50'
-                                                    }`}
-                                                >
-                                                    <div className="space-y-2 text-sm">
-                                                        <p className="font-semibold">{item.name}</p>
-                                                        <p className="text-orange-200">{item.buildingNumber}, {item.landmark}</p>
-                                                        <p className="text-orange-200">{item.city}, {item.district}</p>
-                                                        <p className="text-orange-200">{item.state} - {item.pincode}</p>
-                                                    </div>
-                                                    <button
-                                                        onClick={() => setSelectedAddress(item._id)}
-                                                        className={`mt-3 px-4 py-2 rounded-lg font-medium text-sm transition-colors ${
-                                                            selectedAddress === item._id
-                                                                ? 'bg-orange-400 text-white'
-                                                                : 'bg-orange-200/20 text-orange-200 hover:bg-orange-300/30'
-                                                        }`}
-                                                    >
-                                                        {selectedAddress === item._id ? 'Selected' : 'Choose Address'}
-                                                    </button>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    )
-                                )}
-                            </div>
-                        </div>
-
-                        {/* Cart Items - Bottom Full Width */}
-                        <div className="bg-gradient-to-br from-[#4b3621] to-[#6b4c2a] backdrop-blur-sm text-white rounded-xl p-6 shadow-lg">
-                            <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
-                                <FaShoppingCart className="text-white" />
-                                Your Items
-                            </h3>
-                            {cart.length === 0 ? (
-                                <div className="text-center py-8">
-                                    <div className="inline-flex items-center justify-center w-16 h-16 bg-orange-500/20 rounded-full mb-4">
-                                        <FaShoppingCart className="w-8 h-8 text-orange-300" />
-                                    </div>
-                                    <h3 className="text-xl font-semibold mb-2">Your cart is empty</h3>
-                                    <p className="text-orange-200">Add some delicious items to get started!</p>
+                            {address.length === 0 ? (
+                                <div className="text-center py-8 border-2 border-dashed border-gray-700 rounded-2xl">
+                                    <p className="text-gray-400 mb-4">No delivery address found.</p>
+                                    <Link to={`/user/${_id}/saveaddress`} className="text-orange-500 hover:underline">Add an address</Link>
                                 </div>
                             ) : (
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    {address.map((item, index) => (
+                                        <div
+                                            key={index}
+                                            onClick={() => setSelectedAddress(item._id)}
+                                            className={`cursor-pointer relative p-5 rounded-2xl border-2 transition-all duration-200 group ${selectedAddress === item._id
+                                                    ? 'border-orange-500 bg-orange-500/10'
+                                                    : 'border-gray-700 bg-gray-800 hover:border-gray-600'
+                                                }`}
+                                        >
+                                            <div className="flex justify-between items-start mb-2">
+                                                <h4 className="font-bold text-lg text-white group-hover:text-orange-400 transition">{item.name}</h4>
+                                                {selectedAddress === item._id && (
+                                                    <span className="bg-orange-500 text-white text-xs px-2 py-1 rounded-full font-bold">SELECTED</span>
+                                                )}
+                                            </div>
+                                            <p className="text-gray-400 text-sm leading-relaxed">
+                                                {item.buildingNumber}, {item.landmark}<br />
+                                                {item.city}, {item.district}<br />
+                                                {item.state} - {item.pincode}
+                                            </p>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </motion.div>
+
+                        {/* Order Items */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.1 }}
+                            className="bg-gray-800/50 backdrop-blur-sm rounded-3xl p-6 sm:p-8 border border-gray-700 shadow-xl"
+                        >
+                            <h3 className="text-2xl font-bold mb-6 flex items-center gap-3 text-white">
+                                <FaShoppingCart className="text-orange-500" />
+                                Order Items
+                            </h3>
+
+                            {cart.length === 0 ? (
+                                <p className="text-gray-400 text-center py-6">Your cart is empty.</p>
+                            ) : (
+                                <div className="space-y-4">
                                     {cart.map((item) => (
                                         <div
                                             key={item.productId._id}
-                                            className="bg-orange-500/10 backdrop-blur-sm text-white rounded-xl p-4 shadow-lg transition hover:shadow-xl border border-orange-200/20"
+                                            className="flex items-center gap-4 bg-gray-900/50 p-4 rounded-2xl border border-gray-700/50 hover:border-gray-600 transition"
                                         >
-                                            <div className="flex items-start gap-4">
-                                                <div className="flex-shrink-0">
-                                                    <img
-                                                        src={item.productId.image}
-                                                        alt={item.productId.name}
-                                                        className="w-16 h-16 object-cover rounded-full border-2 border-orange-200"
-                                                    />
+                                            <img
+                                                src={item.productId.image}
+                                                alt={item.productId.name}
+                                                className="w-20 h-20 object-cover rounded-xl shadow-lg"
+                                            />
+                                            <div className="flex-grow">
+                                                <h4 className="text-lg font-bold text-white mb-1">{item.productId.name}</h4>
+                                                <div className="flex items-center text-sm text-gray-400 gap-4">
+                                                    <span>₹{item.productId.price} x {item.qty}</span>
                                                 </div>
-                                                <div className="flex flex-col flex-grow">
-                                                    <div className="flex justify-between items-start">
-                                                        <h3 className="text-base font-semibold">{item.productId.name}</h3>
-                                                        <span className="bg-orange-500 text-white text-sm font-bold px-3 py-1 rounded-lg">
-                                                            ₹{item.productId.price * item.qty}
-                                                        </span>
-                                                    </div>
-                                                    <div className="flex justify-between items-center mt-2">
-                                                        <p className="text-sm text-orange-200">
-                                                            ₹{item.productId.price} each
-                                                        </p>
-                                                        <div className="flex items-center gap-2">
-                                                            <span className="text-sm text-orange-200">Qty:</span>
-                                                            <span className="bg-orange-200/20 text-white px-2 py-1 rounded text-sm font-semibold">
-                                                                {item.qty}
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                            </div>
+                                            <div className="text-right">
+                                                <span className="text-lg font-bold text-orange-400">
+                                                    ₹{item.productId.price * item.qty}
+                                                </span>
                                             </div>
                                         </div>
                                     ))}
                                 </div>
                             )}
-                        </div>
+                        </motion.div>
+                    </div>
+
+                    {/* Right Column: Order Summary (Sticky) */}
+                    <div className="lg:col-span-1">
+                        <motion.div
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: 0.2 }}
+                            className="sticky top-24 bg-gray-800/80 backdrop-blur-md rounded-3xl p-6 sm:p-8 border border-gray-700 shadow-2xl"
+                        >
+                            <h3 className="text-xl font-bold mb-6 flex items-center gap-2 text-white border-b border-gray-700 pb-4">
+                                <FaCreditCard className="text-orange-500" />
+                                Payment Summary
+                            </h3>
+                            <div className="space-y-4 text-gray-300">
+                                <div className="flex justify-between">
+                                    <span>Subtotal</span>
+                                    <span className="text-white font-medium">₹{total.toFixed(2)}</span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span>Delivery Fee</span>
+                                    <span className="text-white font-medium">₹{deliveryCharge}</span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span>Tax (5%)</span>
+                                    <span className="text-white font-medium">₹{tax.toFixed(2)}</span>
+                                </div>
+                                <div className="flex justify-between text-green-400">
+                                    <span>Discount</span>
+                                    <span>- ₹{discount}</span>
+                                </div>
+                                <div className="h-px bg-gray-700 my-2"></div>
+                                <div className="flex justify-between text-2xl font-bold text-white">
+                                    <span>Total</span>
+                                    <span>₹{toPay}</span>
+                                </div>
+                            </div>
+
+                            <button
+                                disabled={cart.length === 0}
+                                onClick={handleOrder}
+                                className={`w-full mt-8 py-4 rounded-xl text-lg font-bold shadow-lg transform transition duration-200 ${cart.length === 0
+                                        ? 'bg-gray-700 text-gray-500 cursor-not-allowed'
+                                        : 'bg-gradient-to-r from-orange-500 to-red-600 text-white hover:shadow-orange-500/30 hover:scale-[1.02] active:scale-[0.98]'
+                                    }`}
+                            >
+                                Pay ₹{toPay}
+                            </button>
+
+                            <p className="text-xs text-center text-gray-500 mt-4">
+                                Secure Payment powered by Razorpay
+                            </p>
+                        </motion.div>
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 

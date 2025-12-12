@@ -21,6 +21,21 @@ const AddressForm = ({ onSave }) => {
     const [message, setMessage] = useState("");
     const [errors, setErrors] = useState({});
 
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value
+        });
+        // Clear error when user types
+        if (errors[name]) {
+            setErrors({
+                ...errors,
+                [name]: null
+            });
+        }
+    };
+
     const validate = () => {
         const newErrors = {};
         if (!/^\d{6}$/.test(formData.pincode)) {
