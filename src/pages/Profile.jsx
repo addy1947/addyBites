@@ -30,18 +30,16 @@ const Profile = () => {
     }, [_id]);
 
     const navItems = [
-        { key: "accounts", label: "My Account", icon: <FiUser />, color: "blue" },
-        { key: "order", label: "My Order", icon: <FiBox />, color: "green" },
-        { key: "address", label: "Address", icon: <FiMapPin />, color: "purple" },
+        { key: "accounts", label: "My Account", icon: <FiUser />, color: "orange" },
+        { key: "order", label: "My Order", icon: <FiBox />, color: "orange" },
+        { key: "address", label: "Address", icon: <FiMapPin />, color: "orange" },
     ];
 
     const getColorClasses = (color, isActive) => {
-        const colors = {
-            blue: isActive ? "bg-blue-100 text-blue-700 border-blue-200" : "hover:bg-blue-50 hover:text-blue-700",
-            green: isActive ? "bg-green-100 text-green-700 border-green-200" : "hover:bg-green-50 hover:text-green-700",
-            purple: isActive ? "bg-purple-100 text-purple-700 border-purple-200" : "hover:bg-purple-50 hover:text-purple-700",
-        };
-        return colors[color];
+        // Redundant with new design, but keeping for compatibility if utilized elsewhere
+        return isActive
+            ? "bg-orange-500/20 text-orange-500 border-orange-500/30"
+            : "text-gray-400 hover:bg-gray-800 hover:text-white";
     };
 
     return (
