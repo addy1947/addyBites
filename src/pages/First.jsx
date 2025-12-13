@@ -5,18 +5,27 @@ import MealType from '../components/MealType';
 import { motion } from 'framer-motion';
 
 const First = () => {
-    const [data, setData] = useState([]);
+    const [data, setData] = useState(null); // Initialize as null
+    const [loading, setLoading] = useState(true);
 
     return (
         <div className="min-h-screen bg-gray-900 text-gray-100 font-sans">
             {/* Header - Sticky */}
-            <Head a={setData} />
-            <MealType a={setData} />
+            <Head a={setData} setLoading={setLoading} />
+            <MealType a={setData} setLoading={setLoading} />
 
             {/* Main Content */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                    {Array.isArray(data) && data.length > 0 ? (
+                    {loading ? (
+                        <div className="col-span-full flex flex-col items-center justify-center py-20 gap-4">
+                            <div className="relative">
+                                <div className="w-16 h-16 border-4 border-gray-700 rounded-full"></div>
+                                <div className="absolute top-0 left-0 w-16 h-16 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
+                            </div>
+                            <p className="text-gray-300 font-semibold text-lg">Loading deliciousness...</p>
+                        </div>
+                    ) : Array.isArray(data) && data.length > 0 ? (
                         data.map((item, index) => (
                             <motion.div
                                 key={item._id}
@@ -56,25 +65,15 @@ const First = () => {
                         ))
                     ) : (
                         <div className="col-span-full text-center py-20">
-                            {Array.isArray(data) ? (
-                                <div className="flex flex-col items-center gap-4">
-                                    <div className="inline-flex items-center justify-center w-16 h-16 bg-gray-800 rounded-full">
-                                        <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.29-1.009-5.824-2.57M15 6.343A7.962 7.962 0 0112 5c-2.34 0-4.29 1.009-5.824 2.57" />
-                                        </svg>
-                                    </div>
-                                    <h3 className="text-xl font-semibold text-gray-300">No products found</h3>
-                                    <p className="text-gray-500">Try adjusting your filters or check back later</p>
+                            <div className="flex flex-col items-center gap-4">
+                                <div className="inline-flex items-center justify-center w-16 h-16 bg-gray-800 rounded-full">
+                                    <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.29-1.009-5.824-2.57M15 6.343A7.962 7.962 0 0112 5c-2.34 0-4.29 1.009-5.824 2.57" />
+                                    </svg>
                                 </div>
-                            ) : (
-                                <div className="flex flex-col items-center gap-4">
-                                    <div className="relative">
-                                        <div className="w-16 h-16 border-4 border-gray-700 rounded-full"></div>
-                                        <div className="absolute top-0 left-0 w-16 h-16 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
-                                    </div>
-                                    <p className="text-gray-300 font-semibold text-lg">Loading deliciousness...</p>
-                                </div>
-                            )}
+                                <h3 className="text-xl font-semibold text-gray-300">No products found</h3>
+                                <p className="text-gray-500">Try adjusting your filters or check back later</p>
+                            </div>
                         </div>
                     )}
                 </div>

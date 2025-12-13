@@ -88,7 +88,7 @@ const SignIn = () => {
 
         if (result.success) {
             alert(result.data.message);
-            navigate('/');
+            navigate('/menu');
         } else {
             alert("Registration failed: " + result.error);
         }

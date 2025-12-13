@@ -32,7 +32,7 @@ const Checkout = () => {
                 { addressId: selectedAddress, paidAmount: toPay },
                 { withCredentials: true }
             );
-            navigate('/')
+            navigate('/menu')
 
         } catch (error) {
             alert("Failed to place order.");

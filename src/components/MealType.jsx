@@ -19,11 +19,13 @@ const MealType = (props) => {
         abortControllerRef.current = controller;
 
         const fetchAllProducts = async () => {
+            if (props.setLoading) props.setLoading(true);
             try {
                 const res = await axios.get(`${RENDER_WEBSITE_LINK}/products/all`, {
                     signal: controller.signal
                 });
 
+                if (props.a) props.a(res.data); // Update parent data immediately
                 setAllProducts(res.data);
             } catch (error) {
                 if (axios.isCancel(error)) {
@@ -31,6 +33,8 @@ const MealType = (props) => {
                 } else {
                     console.error('Error fetching all products:', error);
                 }
+            } finally {
+                if (props.setLoading) props.setLoading(false);
             }
         };
 

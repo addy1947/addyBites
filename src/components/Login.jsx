@@ -66,7 +66,7 @@ const Login = () => {
         setIsLoading(false);
 
         if (result.success) {
-            navigate('/');
+            navigate('/menu');
         } else {
             alert("Login failed: " + result.error);
         }

@@ -16,14 +16,14 @@ const Logout = () => {
 
         if (result.success) {
             // alert('Successfully logged out!'); // Optional: removed for smoother flow
-            navigate('/');
+            navigate('/login');
         } else {
             alert('Logout failed: ' + result.error);
         }
     };
 
     const handleCancel = () => {
-        navigate('/');
+        navigate('/menu');
     };
 
     return (

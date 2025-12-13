@@ -55,7 +55,7 @@ const Account = (props) => {
                             {user.name}
                         </h2>
                         <p className="text-orange-400 font-medium text-lg">
-                            @{user.username}
+                            {user.username}
                         </p>
                     </div>
 

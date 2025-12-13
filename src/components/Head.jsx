@@ -29,6 +29,7 @@ const Head = (props) => {
         }
 
 
+        if (props.setLoading) props.setLoading(true);
 
         try {
             const res = await axios.get(`${RENDER_WEBSITE_LINK}/products/search?q=` + encodeURIComponent(query.trim()));
@@ -37,6 +38,8 @@ const Head = (props) => {
         } catch (error) {
             console.error('Error fetching search results:', error);
             // Handle error, e.g., show a message to the user
+        } finally {
+            if (props.setLoading) props.setLoading(false);
         }
     };
 
